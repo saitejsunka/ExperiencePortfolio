@@ -5,14 +5,14 @@ on:
     branches:
       - main
     paths:
-      - 'Portfolio/infra/**'
+      - 'infra/**'
   pull_request:
     paths:
-      - 'Portfolio/infra/**'
+      - 'infra/**'
 
 defaults:
   run:
-    working-directory: Portfolio/infra
+    working-directory: infra
 
 jobs:
   terraform:
