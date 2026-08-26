@@ -21,8 +21,11 @@ resource "google_sql_database_instance" "primary" {
     }
   }
 
-  # Ensure the VPC peering is completely set up before trying to attach the DB
-  depends_on = [google_service_networking_connection.default]
+  # Ensure the VPC peering and SQL Admin API are set up before trying to attach the DB
+  depends_on = [
+    google_service_networking_connection.default,
+    google_project_service.sqladmin
+  ]
 }
 
 # 2. Read Replica Database
