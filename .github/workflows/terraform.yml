@@ -6,9 +6,12 @@ on:
       - main
     paths:
       - 'infra/**'
+      - '.github/workflows/**'
   pull_request:
     paths:
       - 'infra/**'
+      - '.github/workflows/**'
+  workflow_dispatch:
 
 defaults:
   run:
