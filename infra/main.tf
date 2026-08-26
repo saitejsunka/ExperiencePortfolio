@@ -22,4 +22,8 @@ provider "google" {
 # all the .tf files located in the 'components' folder (like vpc.tf).
 module "infrastructure_components" {
   source = "./components"
+
+  # Pass variables into the components module
+  db_name     = var.db_name
+  db_password = var.db_password
 }

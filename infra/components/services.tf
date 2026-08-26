@@ -17,3 +17,10 @@ resource "google_project_service" "servicenetworking" {
   # Prevents Terraform from disabling the API if the resource is removed
   disable_on_destroy = false
 }
+
+# Enables the Secret Manager API (Required for storing DB credentials securely)
+resource "google_project_service" "secretmanager" {
+  service = "secretmanager.googleapis.com"
+  
+  disable_on_destroy = false
+}
