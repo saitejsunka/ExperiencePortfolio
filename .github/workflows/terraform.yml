@@ -41,8 +41,8 @@ jobs:
 
       - name: Fix Corrupted State (Temporary)
         run: |
-          terraform state rm module.infrastructure_components.google_sql_user.users || true
-          terraform state rm module.infrastructure_components.google_sql_database.database || true
+          terraform import module.infrastructure_components.google_sql_user.users experienceportfolio/expo-primary-write-us-west1/expo_admin || true
+          terraform import module.infrastructure_components.google_sql_database.database experienceportfolio/expo-primary-write-us-west1/${{ secrets.DB_NAME }} || true
 
       - name: Terraform Format
         run: terraform fmt -check
