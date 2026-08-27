@@ -67,3 +67,23 @@ If you are working from a laptop or an external network, you are blocked from th
 
 - **How it works:** Google's managed sidecar. You run the proxy on your laptop, and it builds a TLS-encrypted tunnel directly to the database.
 - **The Advantage:** Zero infrastructure. No Bastion VM, no SSH keys. It uses your Google Cloud IAM credentials (your login). You don't even need the Private IP; the proxy automatically finds the database via its "Instance Connection Name" and magically routes the traffic.
+
+## Cloud SQL Storage (Disk Types): Cost vs. Performance
+
+When provisioning a Cloud SQL instance, Google Cloud offers two primary storage options. The physical minimum limit for any disk type is **10GB**.
+
+### 1. Available Options
+- **`PD_SSD` (Solid State Drive):** The default option. Provides extremely fast read/write speeds and high IOPS (Input/Output Operations Per Second).
+- **`PD_HDD` (Standard Magnetic Drive):** The budget option. Much slower read/write speeds, but costs nearly half the price of SSD storage.
+
+### 2. What We Chose Today (Cost Optimization)
+Because this is an educational/portfolio project, we heavily optimized for cost over speed. We explicitly overrode the default by configuring:
+```hcl
+disk_type = "PD_HDD"
+disk_size = 10
+```
+This forces the database to use the cheapest, slowest magnetic disks at the absolute minimum allowed size (10GB), cutting our storage bill in half.
+
+### 3. What to Choose for Faster Performance (Production)
+For any production environment or application that feels "slow" during database queries, you must choose **`PD_SSD`**. 
+- **The Trade-off:** SSDs cost significantly more per GB, but they are mandatory for applications with high concurrent traffic, frequent write operations, or complex data analytics to prevent physical disk I/O from becoming the primary bottleneck.

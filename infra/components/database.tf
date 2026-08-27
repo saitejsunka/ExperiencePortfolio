@@ -13,7 +13,9 @@ resource "google_sql_database_instance" "primary" {
   deletion_protection = false 
 
   settings {
-    tier = "db-f1-micro"
+    tier      = "db-f1-micro"
+    disk_type = "PD_HDD" # Cheaper than SSD
+    disk_size = 10       # 10GB is the hard minimum limit enforced by GCP
 
     ip_configuration {
       ipv4_enabled    = false # No public internet access
@@ -38,7 +40,9 @@ resource "google_sql_database_instance" "replica" {
   deletion_protection = false
 
   settings {
-    tier = "db-f1-micro"
+    tier      = "db-f1-micro"
+    disk_type = "PD_HDD"
+    disk_size = 10
 
     ip_configuration {
       ipv4_enabled    = false
