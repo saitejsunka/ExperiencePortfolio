@@ -31,3 +31,17 @@ resource "google_project_service" "sqladmin" {
   
   disable_on_destroy = false
 }
+
+# Enables Cloud Logging API
+resource "google_project_service" "logging" {
+  service = "logging.googleapis.com"
+  
+  disable_on_destroy = false
+}
+
+# Enables Cloud Monitoring API
+resource "google_project_service" "monitoring" {
+  service = "monitoring.googleapis.com"
+  
+  disable_on_destroy = false
+}
