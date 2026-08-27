@@ -4,7 +4,7 @@
 
 # 1. Primary Write Database
 resource "google_sql_database_instance" "primary" {
-  name             = "expo-primary-write"
+  name             = "expo-primary-write-us-west1"
   database_version = "POSTGRES_15"
   region           = "us-west1"
 
@@ -32,7 +32,7 @@ resource "google_sql_database_instance" "primary" {
 
 # 2. Read Replica Database
 resource "google_sql_database_instance" "replica" {
-  name                 = "expo-replica-read"
+  name                 = "expo-replica-read-us-west1"
   master_instance_name = google_sql_database_instance.primary.name
   database_version     = "POSTGRES_15"
   region               = "us-west1"
