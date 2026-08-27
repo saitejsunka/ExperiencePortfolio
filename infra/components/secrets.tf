@@ -39,7 +39,7 @@ resource "google_secret_manager_secret_version" "db_password_version" {
 # 3. Database Primary Private IP Secret
 # Dynamically stores the auto-generated private IP so the application can fetch it at runtime
 resource "google_secret_manager_secret" "db_ip" {
-  secret_id = "expo-db-ip"
+  secret_id = "expo-primary-write-db-us-west1-ip"
 
   replication {
     auto {}
@@ -51,4 +51,21 @@ resource "google_secret_manager_secret" "db_ip" {
 resource "google_secret_manager_secret_version" "db_ip_version" {
   secret      = google_secret_manager_secret.db_ip.id
   secret_data = google_sql_database_instance.primary.private_ip_address
+}
+
+# 4. Database Replica Private IP Secret
+# Stores the Read Replica IP so the application can route SELECT queries here (CQRS)
+resource "google_secret_manager_secret" "db_replica_ip" {
+  secret_id = "expo-read-replica-us-west1-ip"
+
+  replication {
+    auto {}
+  }
+
+  depends_on = [google_project_service.secretmanager]
+}
+
+resource "google_secret_manager_secret_version" "db_replica_ip_version" {
+  secret      = google_secret_manager_secret.db_replica_ip.id
+  secret_data = google_sql_database_instance.replica.private_ip_address
 }
