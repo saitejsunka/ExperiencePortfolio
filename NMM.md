@@ -64,12 +64,19 @@ In the Traditional Way, Service A sends a request to a centralized Internal Load
 
 - **Service A (The Caller):** The developer writes code in Service A to simply call `http://service-b`. The developer doesn't need to know the IP address of Service B.
 - **The Sidecar Interception:** The moment the request leaves Service A's code, its local **Sidecar Proxy** instantly intercepts the request.
-- **The Magic of the Proxy:** 
-  1. **Client-Side Load Balancing:** The proxy already knows the IP addresses of all healthy Service B instances. It chooses one directly. (No centralized Load Balancer needed!).
-  2. **Security (mTLS):** The proxy encrypts the traffic using Mutual TLS so the internal network is completely secure.
-  3. **Observability:** The proxy logs exactly how long the request took.
-  4. **Resiliency (Circuit Breaker):** If Service B starts failing or responding too slowly, the proxy automatically "trips the circuit breaker." It immediately returns an error to Service A (Fail Fast) without even trying to hit Service B, preventing a system-wide cascading failure and giving Service B time to recover.
+- **The Sidecar Magic:** The proxy instantly applies all configured networking, security, and resiliency rules natively without touching the application code.
 - **Service B (The Receiver):** The encrypted request is received by Service B's Sidecar Proxy. It decrypts the traffic, verifies Service A's identity, and passes the safe request to Service B's actual application code.
 
-**Why is this required for modern East-West traffic?**
-Without a Service Mesh, developers have to manually write code for retries, timeouts, circuit breaking, logging, and security. With a Service Mesh, the infrastructure (the proxies) handles all the networking, security, and load balancing natively, allowing developers to focus purely on business logic.
+### Service Mesh Features
+
+The sidecar proxies absorb the heavy lifting of distributed systems. DevOps/Platform engineers define these rules via YAML configuration files (e.g., Istio `VirtualService`), and the mesh's central Control Plane distributes them to every sidecar proxy to enforce automatically.
+
+1. **Client-Side Load Balancing:** The central Control Plane continuously health-checks all instances across the VPC and pushes a "healthy IP directory" to every proxy. Because of this, Service A's local proxy natively knows exactly which Service B instances are healthy and distributes the load *before* the request even hits the network. No centralized internal load balancer is needed.
+2. **Security (mTLS):** The proxy automatically encrypts all traffic leaving the instance using Mutual TLS and decrypts it on arrival, ensuring the internal network is completely secure (Zero Trust).
+3. **Observability & Logging:** The proxies natively log every single request, emitting metrics (latency, error rates) and distributed traces, so you can perfectly visualize the traffic flow across hundreds of services.
+4. **Timeouts:** Enforces strict time limits on requests. (e.g., *"If Service B doesn't respond in 2.5 seconds, cancel the request."*)
+5. **Retries with Exponential Backoff:** If a request fails due to a network blip, the proxy can automatically retry. It strictly bounds retries (e.g., *"Retry max 3 times"*) and uses exponential backoff (wait 1s, then 2s, then 4s) to avoid causing a "Retry Storm" that could crash the system.
+6. **Resiliency (Circuit Breaking):** Protects struggling services to allow graceful recovery. 
+   - *How it works:* If a specific error threshold is hit (e.g., 5 consecutive 500-level errors in 10 seconds), the proxy "trips the breaker."
+   - *Fail Fast:* It instantly returns an error back to Service A without attempting to hit Service B, cutting off traffic completely so Service B's CPU/Memory can recover.
+   - *Graceful Recovery:* After a configured time (e.g., 30s sleep window), it enters a "Half-Open" state, allowing exactly *one* request through to test the waters. If it succeeds, the breaker closes and normal traffic resumes. If it fails, it trips again.
