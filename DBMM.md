@@ -1,17 +1,18 @@
 # Database Patterns Mind Map
 
-## Read Heavy and Writes Happen Often
+## 1. Read Heavy and Writes Happen Often
+*Example: Social Media Feeds (Twitter/Threads)*
+- **CQRS (Command Query Responsibility Segregation):** Physically split the database tier. Route all heavy writes to a Primary database, and route all complex reads to synchronized Read Replicas.
+- **Event Sourcing:** Instead of overwriting data, store every single write as an append-only log of events (e.g., Kafka). It's extremely fast to write, and you can reconstruct the state later for reading.
 
-- CQRS - Command Query Responsibility Segregation Pattern - To handle both read and writes
-- Event Sourcing Pattern - To handle writes
+## 2. Write Heavy and Reads Happen Often
+*Example: Real-time Analytics or IoT Telemetry*
+- **Database Sharding:** Split the database horizontally across multiple servers (e.g., Shard A handles Users A-M, Shard B handles Users N-Z) to distribute the massive write load.
+- **Write-Through Cache:** Write data to a fast memory cache (Redis) and the database simultaneously. Ensures subsequent reads are instantly available `O(1)` without waiting for disk I/O.
 
-## Write Heavy and Reads Happen Often
-
-- Sharding Pattern + Write-Through Cache
-
-## Read Heavy and Writes are Infrequent
-
-- Cache Aside Pattern - For handling high read volume
+## 3. Read Heavy and Writes are Infrequent
+*Example: User Profiles or Static Configuration*
+- **Cache-Aside Pattern:** The app first checks the memory cache. If found (Cache Hit), return it instantly `O(1)`. If not (Cache Miss), fetch from the slower database `O(log N)`, save it to the cache for the next user, and return it.
 
 ## Architectural Engineering Analysis (FAANG Perspective)
 
@@ -28,3 +29,9 @@
 - **Intermediate:** Manual SQL Sharding. Extremely complex application logic to maintain.
 - **Optimized:** Native NoSQL (Cassandra/Bigtable/DynamoDB) scaling horizontally.
 - **Most Optimized:** LSM-Tree NoSQL with **Composite Shard Keys**. Hashing by a composite key (e.g., `User_ID` + `Timestamp`) distributes massive concurrent writes mathematically evenly across hundreds of nodes, completely preventing Hot Partitions.
+
+## Application to Database Connectivity
+- **No Automatic Connections:** Just because a Managed Instance Group (MIG) and a Cloud SQL Database exist in the same VPC does *not* mean they are automatically connected.
+- **Explicit Design:** You must explicitly design the connection. The MIG instances must be injected with the Database's exact IP, credentials, and allowed through firewall rules.
+- **Example:** A backend VM in `us-west1` doesn't magically find the database. It must pull the DB Password from Secret Manager and the Private IP string (`e.g., 10.5.0.3`) at startup to explicitly establish the connection.
+- **Static IPs & HA Failover:** Once assigned, the database's Private IP is completely static. If the primary database crashes, Google High Availability (HA) instantly boots a Standby replica that *steals* the exact same IP address. Your backend code never needs to be updated.
