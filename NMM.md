@@ -25,3 +25,24 @@ A **Subnet** is how you physically and logically divide your VPC into smaller ch
 ## FAANG Architecture Rules
 1. **Maximum Isolation:** Databases and backend services must live in Private Subnets.
 2. **Controlled Access:** Only external-facing API Gateways or Load Balancers live in Public Subnets.
+
+## Services Communication - Traditional Way
+
+When connecting microservices (e.g., Service A talking to Service B), the architecture in Google Cloud is fundamentally different from traditional on-premise mental models.
+
+### 1. The Front Door (North-South Traffic)
+**The Common Misconception:** People often assume an API Gateway sits at the public edge, and the Load Balancer sits *inside* the VPC purely to distribute traffic. So that API Gateway has public static IP and load balancer will have private static IP bridging between API Gateway and Internal Services.
+- *Why this misconception exists:* Historically, hardware Load Balancers were "dumb" (they only routed raw network packets). Therefore, architects had to build a dedicated API Gateway and place it at the edge to handle **Authentication** (Who are you?), **Authorization** (What can you do?), and **Rate Limiting** (Token bucket math to prevent DDoS).
+
+**The GCP Reality:** The **Global External Load Balancer (GLB)** is the Edge. It does not live inside your VPC. It is a planetary-scale software system deployed in Google data centers worldwide.
+- **The Public Static IP:** The GLB holds the Public Anycast IP. It is the absolute bridge between the public internet and your private VPC. It must be static so you can reliably map your custom domain (e.g., `api.aximblue.com`) in DNS.
+- **Cloud Armor (The Shield):** Instead of relying on a traditional API Gateway for rate limiting, Google uses **Cloud Armor**. Cloud Armor attaches *directly* to the External Load Balancer. It acts as a Web Application Firewall (WAF) and Rate Limiter, dropping malicious traffic at the edge of the world before it ever touches your VPC.
+- **Routing:** The GLB accepts the traffic, terminates the SSL certificate, and pushes the safe traffic *into* your VPC directly to the Managed Instance Group of **Service A**.
+*(Note: If you use Google's standalone "API Gateway" serverless product, it is typically placed behind the GLB to do deep payload inspection, but the GLB is always the true front door).*
+
+### 2. The Internal Network (East-West Traffic)
+**The GCP Reality:** While the External Load Balancer lives outside the VPC, the **Internal Load Balancer (ILB)** lives strictly *inside* your VPC and will have static private IP.
+- **Service A:** Processes the business logic. Because it sits behind the GLB and Cloud Armor, any request it processes is already verified and "trusted."
+- **Internal Load Balancer:** When Service A needs to call Service B, it sends the request to an Internal Load Balancer. 
+  - **The Private Static IP:** The ILB holds a Private Static IP (e.g., `10.0.1.100`) from your subnet. It must be static so the code in Service A has a reliable, unchanging address to send its internal requests to.
+- **Service B:** Receives the traffic from the Internal Load Balancer. Because the traffic from Service A is already trusted, **Service B does not need Cloud Armor or an API Gateway.** It solely relies on the Internal Load Balancer to distribute the load across its instances.
