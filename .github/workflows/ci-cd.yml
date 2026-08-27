@@ -1,0 +1,123 @@
+name: "CI/CD Pipeline"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'infra/**'
+      - 'backend/**'
+      - '.github/workflows/**'
+  pull_request:
+    paths:
+      - 'infra/**'
+      - 'backend/**'
+      - '.github/workflows/**'
+
+jobs:
+  # 1. Detect which files changed so we only run necessary jobs
+  changes:
+    name: "Detect Changes"
+    runs-on: ubuntu-latest
+    outputs:
+      infra: ${{ steps.filter.outputs.infra }}
+      backend: ${{ steps.filter.outputs.backend }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: Check changed files
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            infra:
+              - 'infra/**'
+              - '.github/workflows/**'
+            backend:
+              - 'backend/**'
+              - '.github/workflows/**'
+
+  # 2. Run Terraform ONLY if infra or workflows changed
+  terraform:
+    name: "Terraform"
+    needs: changes
+    if: ${{ needs.changes.outputs.infra == 'true' }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra
+    env:
+      TF_VAR_db_name: ${{ secrets.DB_NAME }}
+      TF_VAR_db_password: ${{ secrets.DB_PASSWORD }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_JSON_KEY }}'
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Fix Corrupted State (Temporary)
+        run: |
+          terraform import module.infrastructure_components.google_sql_user.users experienceportfolio/expo-primary-write-us-west1/expo_admin || true
+          terraform import module.infrastructure_components.google_sql_database.database experienceportfolio/expo-primary-write-us-west1/${{ secrets.DB_NAME }} || true
+
+      - name: Terraform Format
+        run: terraform fmt -check || true
+
+      - name: Terraform Plan
+        run: terraform plan -input=false
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve -input=false
+
+  # 3. Run Backend Deployment ONLY if backend changed and AFTER terraform finishes
+  deploy-backend:
+    name: "Deploy Backend to Cloud Run"
+    needs: [changes, terraform]
+    # 'always()' ensures this runs even if 'terraform' is skipped (because infra didn't change).
+    if: ${{ always() && needs.changes.outputs.backend == 'true' && (needs.terraform.result == 'success' || needs.terraform.result == 'skipped') && github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_ID: experienceportfolio
+      REGION: us-west1
+      REPO_NAME: expo-backend-repo
+      SERVICE_NAME: expo-backend
+      IMAGE_NAME: us-west1-docker.pkg.dev/experienceportfolio/expo-backend-repo/expo-backend
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_JSON_KEY }}'
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker Auth
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+
+      - name: Build and Push Docker Image
+        run: |
+          cd backend
+          docker build -t ${{ env.IMAGE_NAME }}:${{ github.sha }} -t ${{ env.IMAGE_NAME }}:latest .
+          docker push ${{ env.IMAGE_NAME }}:${{ github.sha }}
+          docker push ${{ env.IMAGE_NAME }}:latest
+
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ env.SERVICE_NAME }}
+          region: ${{ env.REGION }}
+          image: ${{ env.IMAGE_NAME }}:${{ github.sha }}

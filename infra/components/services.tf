@@ -45,3 +45,10 @@ resource "google_project_service" "monitoring" {
   
   disable_on_destroy = false
 }
+
+# Enables IAM API (Required for creating service accounts)
+resource "google_project_service" "iam" {
+  service = "iam.googleapis.com"
+  
+  disable_on_destroy = false
+}

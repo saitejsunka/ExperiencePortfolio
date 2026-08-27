@@ -7,6 +7,8 @@ resource "google_service_account" "expo_backend_sa" {
   account_id   = "expo-backend-sa"
   display_name = "Expo Backend Service Account"
   description  = "Identity for the Cloud Run Expo Backend Service"
+
+  depends_on = [google_project_service.iam]
 }
 
 # Grant Cloud SQL Client role so it can connect to the database via mTLS
