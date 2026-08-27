@@ -39,6 +39,11 @@ jobs:
       - name: Terraform Init
         run: terraform init
 
+      - name: Fix Corrupted State (Temporary)
+        run: |
+          terraform state rm module.infrastructure_components.google_sql_user.users || true
+          terraform state rm module.infrastructure_components.google_sql_database.database || true
+
       - name: Terraform Format
         run: terraform fmt -check
 
