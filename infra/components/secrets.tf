@@ -56,7 +56,7 @@ resource "google_secret_manager_secret_version" "db_ip_version" {
 # 4. Database Replica Private IP Secret
 # Stores the Read Replica IP so the application can route SELECT queries here (CQRS)
 resource "google_secret_manager_secret" "db_replica_ip" {
-  secret_id = "expo-replica-read-us-west1-ip-address"
+  secret_id = "expo-replica-read-db-us-west1-ip-address"
 
   replication {
     auto {}
