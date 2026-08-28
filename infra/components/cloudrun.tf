@@ -18,8 +18,9 @@ resource "google_cloud_run_v2_service" "expo_backend" {
     service_account = google_service_account.expo_backend_sa.email
 
     containers {
-      # Use a placeholder image or the latest pushed image
-      image = "us-west1-docker.pkg.dev/experienceportfolio/expo-backend-repo/expo-backend:latest"
+      # Use Google's public hello image for the VERY FIRST deployment so Terraform doesn't crash.
+      # The CI/CD pipeline will immediately overwrite this with your real Go backend image.
+      image = "us-docker.pkg.dev/cloudrun/container/hello"
       
       ports {
         container_port = 5080 # Needs to match what we listen to in Go
