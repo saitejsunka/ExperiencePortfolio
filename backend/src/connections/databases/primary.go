@@ -21,7 +21,7 @@ type PrimaryConfig struct {
 	ProjectID            string
 	Region               string
 	InstanceName         string // e.g., "expo-primary-write-us-west1"
-	DBUser               string
+	UserSecretName       string // e.g., "projects/123/secrets/expo-db-user/versions/latest"
 	DBNameSecretName     string // e.g., "projects/123/secrets/expo-db-name/versions/latest"
 	PasswordSecretName   string // e.g., "projects/123/secrets/expo-db-password/versions/latest"
 	IPSecretName         string // e.g., "projects/123/secrets/expo-primary-write-db-us-west1-ip-address/versions/latest"
@@ -52,6 +52,15 @@ func ConnectPrimaryWrite(ctx context.Context, cfg PrimaryConfig, smClient *gcpsm
 	}
 	dbName := string(dbNameReq.Payload.Data)
 
+	// Fetch DB User
+	dbUserReq, err := smClient.AccessSecretVersion(ctx, &secretmanagerpb.AccessSecretVersionRequest{
+		Name: cfg.UserSecretName,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to access dbuser secret: %w", err)
+	}
+	dbUser := string(dbUserReq.Payload.Data)
+
 	// 2. Establish Secure Authorized Tunnel
 	instanceConnectionName := fmt.Sprintf("%s:%s:%s", cfg.ProjectID, cfg.Region, cfg.InstanceName)
 	
@@ -64,7 +73,7 @@ func ConnectPrimaryWrite(ctx context.Context, cfg PrimaryConfig, smClient *gcpsm
 	_ = cleanup // Usually defer cleanup()
 
 	// 3. Open the Connection Pool
-	dsn := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", cfg.DBUser, dbPassword, dbName)
+	dsn := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", dbUser, dbPassword, dbName)
 	
 	start := time.Now()
 	db, err := sql.Open("cloudsql-postgres-primary", instanceConnectionName+"?"+dsn)

@@ -66,7 +66,7 @@ resource "google_sql_database" "database" {
 # 4. Database User (Basic Setup)
 # Password securely injected from GitHub Actions Secrets
 resource "google_sql_user" "users" {
-  name     = "expo_admin"
+  name     = var.db_user
   instance = google_sql_database_instance.primary.name
   password = var.db_password
 }

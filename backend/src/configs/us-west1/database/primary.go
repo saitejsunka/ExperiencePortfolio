@@ -9,7 +9,7 @@ func GetPrimaryWriteUsWest1Config(projectID string) db_connections.PrimaryConfig
 		ProjectID:          projectID,
 		Region:             "us-west1",
 		InstanceName:       "expo-primary-write-us-west1",
-		DBUser:             "postgres", // Default user, update if different
+		UserSecretName:     fmtSecretName(projectID, "expo-db-user"), 
 		DBNameSecretName:   fmtSecretName(projectID, "expo-db-name"),
 		PasswordSecretName: fmtSecretName(projectID, "expo-db-password"),
 		IPSecretName:       fmtSecretName(projectID, "expo-primary-write-db-us-west1-ip-address"),

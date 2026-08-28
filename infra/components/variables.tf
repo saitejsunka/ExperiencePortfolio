@@ -4,7 +4,13 @@ variable "db_name" {
 }
 
 variable "db_password" {
-  description = "The password for the expo_admin database user"
+  description = "The password for the database user"
+  type        = string
+  sensitive   = true
+}
+
+variable "db_user" {
+  description = "The database user"
   type        = string
   sensitive   = true
 }

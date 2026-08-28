@@ -21,7 +21,7 @@ type ReplicaConfig struct {
 	ProjectID            string
 	Region               string
 	InstanceName         string // e.g., "expo-replica-read-us-west1"
-	DBUser               string
+	UserSecretName       string // e.g., "projects/123/secrets/expo-db-user/versions/latest"
 	DBNameSecretName     string
 	PasswordSecretName   string
 	IPSecretName         string // e.g., "projects/.../secrets/expo-replica-read-db-us-west1-ip-address/versions/latest"
@@ -51,6 +51,15 @@ func ConnectReplicaRead(ctx context.Context, cfg ReplicaConfig, smClient *gcpsm.
 	}
 	dbName := string(dbNameReq.Payload.Data)
 
+	// Fetch DB User
+	dbUserReq, err := smClient.AccessSecretVersion(ctx, &secretmanagerpb.AccessSecretVersionRequest{
+		Name: cfg.UserSecretName,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to access dbuser secret: %w", err)
+	}
+	dbUser := string(dbUserReq.Payload.Data)
+
 	// 2. Establish Secure Authorized Tunnel
 	instanceConnectionName := fmt.Sprintf("%s:%s:%s", cfg.ProjectID, cfg.Region, cfg.InstanceName)
 	
@@ -63,7 +72,7 @@ func ConnectReplicaRead(ctx context.Context, cfg ReplicaConfig, smClient *gcpsm.
 	_ = cleanup // Usually defer cleanup()
 
 	// 3. Open the Connection Pool
-	dsn := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", cfg.DBUser, dbPassword, dbName)
+	dsn := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", dbUser, dbPassword, dbName)
 	
 	start := time.Now()
 	db, err := sql.Open("cloudsql-postgres-replica", instanceConnectionName+"?"+dsn)
