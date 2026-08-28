@@ -13,6 +13,7 @@ on:
       - 'infra/**'
       - 'backend/**'
       - '.github/workflows/**'
+  workflow_dispatch: # Allows you to manually trigger the workflow from the GitHub UI
 
 jobs:
   # 1. Detect which files changed so we only run necessary jobs
