@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"strings"
 	"time"
 
 	"cloud.google.com/go/cloudsqlconn"
@@ -40,7 +41,7 @@ func ConnectReplicaRead(ctx context.Context, cfg ReplicaConfig, smClient *gcpsm.
 	if err != nil {
 		return nil, fmt.Errorf("failed to access password secret: %w", err)
 	}
-	dbPassword := string(passReq.Payload.Data)
+	dbPassword := strings.TrimSpace(string(passReq.Payload.Data))
 
 	// Fetch DB Name
 	dbNameReq, err := smClient.AccessSecretVersion(ctx, &secretmanagerpb.AccessSecretVersionRequest{
@@ -49,7 +50,7 @@ func ConnectReplicaRead(ctx context.Context, cfg ReplicaConfig, smClient *gcpsm.
 	if err != nil {
 		return nil, fmt.Errorf("failed to access dbname secret: %w", err)
 	}
-	dbName := string(dbNameReq.Payload.Data)
+	dbName := strings.TrimSpace(string(dbNameReq.Payload.Data))
 
 	// Fetch DB User
 	dbUserReq, err := smClient.AccessSecretVersion(ctx, &secretmanagerpb.AccessSecretVersionRequest{
@@ -58,7 +59,7 @@ func ConnectReplicaRead(ctx context.Context, cfg ReplicaConfig, smClient *gcpsm.
 	if err != nil {
 		return nil, fmt.Errorf("failed to access dbuser secret: %w", err)
 	}
-	dbUser := string(dbUserReq.Payload.Data)
+	dbUser := strings.TrimSpace(string(dbUserReq.Payload.Data))
 
 	// 2. Establish Secure Authorized Tunnel
 	instanceConnectionName := fmt.Sprintf("%s:%s:%s", cfg.ProjectID, cfg.Region, cfg.InstanceName)
@@ -72,10 +73,10 @@ func ConnectReplicaRead(ctx context.Context, cfg ReplicaConfig, smClient *gcpsm.
 	_ = cleanup // Usually defer cleanup()
 
 	// 3. Open the Connection Pool
-	dsn := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", dbUser, dbPassword, dbName)
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s sslmode=disable", instanceConnectionName, dbUser, dbPassword, dbName)
 	
 	start := time.Now()
-	db, err := sql.Open("cloudsql-postgres-replica", instanceConnectionName+"?"+dsn)
+	db, err := sql.Open("cloudsql-postgres-replica", dsn)
 	if err != nil {
 		logger.Error(ctx, "Failed to open Replica database pool")
 		return nil, fmt.Errorf("failed to open database pool: %w", err)
