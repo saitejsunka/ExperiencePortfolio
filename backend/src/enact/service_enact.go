@@ -1,10 +1,10 @@
-package services
+package enact
 
 import (
 	"context"
 	"database/sql"
-	"fmt"
 
+	"github.com/saitejsunka/ExperiencePortfolio/Portfolio/backend/src/enact/apis"
 	"github.com/saitejsunka/ExperiencePortfolio/Portfolio/backend/src/observability"
 	pb "github.com/saitejsunka/ExperiencePortfolio/Portfolio/backend/stubs"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -29,32 +29,15 @@ func NewExpoBackendService(primaryDB, replicaDB *sql.DB, telemetry *observabilit
 
 // CreatePost performs an UPSERT operation.
 func (s *ExpoBackendService) CreatePost(ctx context.Context, req *pb.CreatePostRequest) (*pb.Post, error) {
-	logger := s.telemetry.Logger("expo-backend")
-	logger.Info(ctx, fmt.Sprintf("Received CreatePost request for author: %s", req.GetAuthorId()))
-
-	// TODO: Implement database UPSERT logic using s.primaryDB
-	return &pb.Post{
-		Content: "This is a mock response from the server!",
-	}, nil
+	return apis.CreatePostAPI(ctx, req, s.primaryDB, s.telemetry)
 }
 
 // ReadPost retrieves a post by its ID.
 func (s *ExpoBackendService) ReadPost(ctx context.Context, req *pb.ReadPostRequest) (*pb.Post, error) {
-	logger := s.telemetry.Logger("expo-backend")
-	logger.Info(ctx, fmt.Sprintf("Received ReadPost request for post: %s", req.GetPostId()))
-
-	// TODO: Implement database SELECT logic using s.replicaDB
-	return &pb.Post{
-		PostId:  req.GetPostId(),
-		Content: "This is a mock response from the server!",
-	}, nil
+	return apis.ReadPostAPI(ctx, req, s.replicaDB, s.telemetry)
 }
 
 // DeletePost performs a soft delete operation.
 func (s *ExpoBackendService) DeletePost(ctx context.Context, req *pb.DeletePostRequest) (*emptypb.Empty, error) {
-	logger := s.telemetry.Logger("expo-backend")
-	logger.Info(ctx, fmt.Sprintf("Received DeletePost request for post: %s", req.GetPostId()))
-
-	// TODO: Implement database soft delete logic using s.primaryDB
-	return &emptypb.Empty{}, nil
+	return apis.DeletePostAPI(ctx, req, s.primaryDB, s.telemetry)
 }

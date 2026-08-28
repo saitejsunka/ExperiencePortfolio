@@ -10,7 +10,7 @@ import (
 
 	appinit "github.com/saitejsunka/ExperiencePortfolio/Portfolio/backend/src/utils/init"
 	"github.com/saitejsunka/ExperiencePortfolio/Portfolio/backend/src/observability"
-	"github.com/saitejsunka/ExperiencePortfolio/Portfolio/backend/src/services"
+	"github.com/saitejsunka/ExperiencePortfolio/Portfolio/backend/src/enact"
 	pb "github.com/saitejsunka/ExperiencePortfolio/Portfolio/backend/stubs"
 	"google.golang.org/grpc"
 )
@@ -38,7 +38,7 @@ func main() {
 	defer dbCleanup()
 
 	// 5. Initialize Services
-	expoService := services.NewExpoBackendService(primaryDB, replicaDB, telemetry)
+	expoService := enact.NewExpoBackendService(primaryDB, replicaDB, telemetry)
 
 	// 6. Setup gRPC Server
 	lis, err := net.Listen("tcp", ":5080")
