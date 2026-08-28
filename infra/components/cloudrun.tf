@@ -23,6 +23,7 @@ resource "google_cloud_run_v2_service" "expo_backend" {
       image = "us-docker.pkg.dev/cloudrun/container/hello"
       
       ports {
+        name           = "h2c" # Required for gRPC
         container_port = 5080 # Needs to match what we listen to in Go
       }
       
@@ -40,8 +41,8 @@ resource "google_cloud_run_v2_service" "expo_backend" {
         network    = google_compute_network.expo_vpc.id
         subnetwork = google_compute_subnetwork.expo_subnet_us_west1.id
       }
-      # Send ALL traffic through the VPC so it reaches the private IP DB safely
-      egress = "ALL_TRAFFIC"
+      # Send only traffic destined for private IPs through the VPC
+      egress = "PRIVATE_RANGES_ONLY"
     }
   }
 
