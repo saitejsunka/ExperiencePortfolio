@@ -9,6 +9,7 @@ import (
 	"github.com/saitejsunka/ExperiencePortfolio/Portfolio/backend/src/configs/us-west1/database"
 	db_connections "github.com/saitejsunka/ExperiencePortfolio/Portfolio/backend/src/connections/databases"
 	"github.com/saitejsunka/ExperiencePortfolio/Portfolio/backend/src/observability"
+	"github.com/saitejsunka/ExperiencePortfolio/Portfolio/backend/src/utils/checks"
 )
 
 // InitializeUsWest1Databases establishes connections to the primary and replica databases.
@@ -30,6 +31,9 @@ func InitializeUsWest1Databases(ctx context.Context, projectID string, smClient 
 		primaryDB.Close()
 		log.Fatalf("Critical Error: Replica Database unreachable: %v", err)
 	}
+
+	// Start Background Health Checks
+	checks.ContinuousMonitorDatabaseConnection(ctx, primaryDB, replicaDB, telemetry)
 
 	cleanup := func() {
 		primaryDB.Close()
