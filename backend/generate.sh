@@ -35,3 +35,14 @@ protoc -I=contracts \
   contracts/expo_backend.proto
 
 echo "✅ gRPC Stubs generated successfully in the 'stubs' directory!"
+
+# 5. Initialize the stubs directory as a standalone Go module
+echo "📦 Initializing stubs as a Go module..."
+cd stubs
+if [ ! -f go.mod ]; then
+    go mod init github.com/saitejsunka/ExperiencePortfolio/Portfolio/backend/stubs
+fi
+go mod tidy
+cd ..
+
+echo "🎉 All done!"

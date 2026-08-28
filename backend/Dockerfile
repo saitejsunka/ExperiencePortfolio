@@ -6,11 +6,17 @@ FROM golang:1.27-alpine AS builder
 
 WORKDIR /app
 
-RUN apk update && apk add --no-cache git ca-certificates tzdata
+# Install base dependencies and protoc for gRPC generation
+RUN apk update && apk add --no-cache git ca-certificates tzdata bash protoc protobuf-dev
 
-# Copy the stubs directory
-COPY stubs/ ./stubs/
-# Copy the src directory
+# Copy the contracts and generation script first
+COPY contracts/ ./contracts/
+COPY generate.sh ./
+
+# Generate the stubs dynamically during the build
+RUN ./generate.sh
+
+# Now copy the main source code
 COPY src/ ./src/
 
 # Set working directory to where the main go.mod is
