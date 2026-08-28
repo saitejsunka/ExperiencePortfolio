@@ -41,8 +41,8 @@ resource "google_cloud_run_v2_service" "expo_backend" {
         network    = google_compute_network.expo_vpc.id
         subnetwork = google_compute_subnetwork.expo_subnet_us_west1.id
       }
-      # Send ALL outbound traffic through the VPC. Private IPs hit the DB, public IPs hit the Cloud NAT to reach the internet.
-      egress = "ALL_TRAFFIC"
+      # Send only traffic destined for private IPs (like Cloud SQL) through the VPC
+      egress = "PRIVATE_RANGES_ONLY"
     }
   }
 
