@@ -26,4 +26,5 @@ module "infrastructure_components" {
   # Pass variables into the components module
   db_name     = var.db_name
   db_password = var.db_password
+  db_user     = var.db_user
 }
