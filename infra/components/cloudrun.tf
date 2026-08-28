@@ -11,7 +11,7 @@ resource "google_project_service" "run" {
 resource "google_cloud_run_v2_service" "expo_backend" {
   name     = "expo-backend"
   location = "us-west1"
-  ingress  = "INGRESS_TRAFFIC_ALL" # Adjust based on frontend location later
+  ingress  = "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER" # Lock down ingress to only accept traffic from our Global Load Balancer
 
   template {
     # Link to the service account created in iam.tf
@@ -41,8 +41,8 @@ resource "google_cloud_run_v2_service" "expo_backend" {
         network    = google_compute_network.expo_vpc.id
         subnetwork = google_compute_subnetwork.expo_subnet_us_west1.id
       }
-      # Send only traffic destined for private IPs through the VPC
-      egress = "PRIVATE_RANGES_ONLY"
+      # Send ALL outbound traffic through the VPC. Private IPs hit the DB, public IPs hit the Cloud NAT to reach the internet.
+      egress = "ALL_TRAFFIC"
     }
   }
 

@@ -38,3 +38,12 @@ resource "google_project_iam_member" "metric_writer" {
   role    = "roles/monitoring.metricWriter"
   member  = "serviceAccount:${google_service_account.expo_backend_sa.email}"
 }
+
+# Allow public invocation of the Cloud Run service (Ingress will be restricted to the Load Balancer at the network level)
+resource "google_cloud_run_service_iam_member" "public_invoker" {
+  project  = "experienceportfolio"
+  location = google_cloud_run_v2_service.expo_backend.location
+  service  = google_cloud_run_v2_service.expo_backend.name
+  role     = "roles/run.invoker"
+  member   = "allUsers"
+}
