@@ -8,6 +8,6 @@ resource "google_logging_project_bucket_config" "default_log_bucket" {
   location       = "global"
   bucket_id      = "_Default"
   
-  # Set retention to 15 days
-  retention_days = 15
+  # Set retention to 8 days to optimize cost
+  retention_days = 8
 }
