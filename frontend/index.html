@@ -11,16 +11,49 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 
     <!-- Modular CSS -->
-    <link rel="stylesheet" href="styles/variables.css">
-    <link rel="stylesheet" href="styles/base.css">
-    <link rel="stylesheet" href="styles/layout.css">
-    <link rel="stylesheet" href="styles/components/infographic.css">
+    <link rel="stylesheet" href="styles/variables.css?v=9">
+    <link rel="stylesheet" href="styles/base.css?v=9">
+    <link rel="stylesheet" href="styles/layout.css?v=9">
+    <link rel="stylesheet" href="styles/components/infographic.css?v=9">
 </head>
 <body>
     <!-- Sticky Navigation Bar (Appears on scroll) -->
     <nav id="sticky-nav" class="sticky-nav">
         <div class="nav-title">Sai Tej Sunkara - Backend Developer</div>
     </nav>
+
+    <!-- Table of Contents (Fixed Left) -->
+    <aside id="toc-timeline" class="toc-timeline">
+        <h3 class="toc-heading">My Amazon Experience</h3>
+        <a href="#point-1" class="toc-link" style="--point-color: #38bdf8; --point-gradient: linear-gradient(135deg, #38bdf8, #818cf8);">
+            <span class="toc-dot"></span>
+            <span class="toc-text">Cache Stampede Eliminated</span>
+        </a>
+        <a href="#point-2" class="toc-link" style="--point-color: #FF9900; --point-gradient: linear-gradient(135deg, #FF9900, #ff5e62);">
+            <span class="toc-dot"></span>
+            <span class="toc-text">Zero Data Loss Under Massive Load</span>
+        </a>
+        <a href="#point-3" class="toc-link" style="--point-color: #10b981; --point-gradient: linear-gradient(135deg, #10b981, #34d399);">
+            <span class="toc-dot"></span>
+            <span class="toc-text">System Resilience & Fault Tolerance</span>
+        </a>
+        <a href="#point-4" class="toc-link" style="--point-color: #FF9900; --point-gradient: linear-gradient(135deg, #FF9900, #ff5e62);">
+            <span class="toc-dot"></span>
+            <span class="toc-text">Eventual Consistency at Scale</span>
+        </a>
+        <a href="#point-5" class="toc-link" style="--point-color: #8b5cf6; --point-gradient: linear-gradient(135deg, #00A8E1, #8b5cf6);">
+            <span class="toc-dot"></span>
+            <span class="toc-text">Zero-Downtime Migration</span>
+        </a>
+
+        <!-- TOC Action Buttons -->
+        <div class="toc-actions">
+            <button class="toc-btn primary">View Sai's Resume</button>
+            <button class="toc-btn outline" onclick="window.location.href='mailto:saitejsunka@gmail.com';">Send email to Sai</button>
+            <span class="toc-email"><strong>Email: </strong>saitejsunka@gmail.com</span>
+            <span class="toc-email"><strong>Phone: </strong>+1 206-440-6594</span>
+        </div>
+    </aside>
 
     <main class="container">
         <!-- Hero Section -->
@@ -650,6 +683,6 @@
 
     </main>
 
-    <script type="module" src="scripts/main.js"></script>
+    <script type="module" src="scripts/main.js?v=1"></script>
 </body>
 </html>

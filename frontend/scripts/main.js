@@ -53,4 +53,34 @@ document.addEventListener('DOMContentLoaded', () => {
         
         navObserver.observe(heroTitle);
     }
+
+    // 4. Handle Table of Contents (TOC) Highlighting
+    const tocObserverOptions = {
+        root: null,
+        rootMargin: '-30% 0px -60% 0px', // Trigger when section is in the middle-top part of the screen
+        threshold: 0
+    };
+
+    const tocObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+                // Remove active class from all toc-links
+                document.querySelectorAll('.toc-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                // Add active class to corresponding link
+                const activeLink = document.querySelector(`.toc-link[href="#${id}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+        });
+    }, tocObserverOptions);
+
+    // Observe all infographic sections for TOC
+    document.querySelectorAll('.infographic-section').forEach(section => {
+        tocObserver.observe(section);
+    });
 });

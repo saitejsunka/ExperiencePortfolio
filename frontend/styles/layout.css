@@ -6,7 +6,12 @@
     width: 100vw;
     height: 100vh;
     z-index: 0;
-    pointer-events: none; /* Let clicks pass through to content */
+    pointer-events: none;
+    /* Let clicks pass through to content */
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 /* Main Container */
@@ -51,6 +56,7 @@
     .hero h1 {
         font-size: 2.5rem;
     }
+
     .hero p {
         font-size: 1.1rem;
         padding: 0 1rem;
@@ -64,21 +70,21 @@
     left: 0;
     width: 100%;
     z-index: 100;
-    
+
     /* Solid, opaque moving gradient based on site theme (Deep space black, Tech Blue, Amazon Orange) */
     background: linear-gradient(270deg, #05050A, #002842, #05050A, #4a2d00, #05050A);
     background-size: 400% 400%;
     animation: stickyGradientMove 10s ease infinite;
-    
+
     /* Hardware acceleration to prevent scrolling lag */
     will-change: transform, opacity, background-position;
-    
+
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     padding: 1.2rem;
-    
+
     display: flex;
     align-items: center;
-    
+
     /* Initial state (hidden, slightly moved up) */
     opacity: 0;
     transform: translateY(-100%);
@@ -87,9 +93,17 @@
 }
 
 @keyframes stickyGradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .sticky-nav.scrolled {
@@ -102,7 +116,8 @@
 
 .nav-title {
     width: 100%;
-    max-width: 1200px; /* match .container max-width */
+    max-width: 1200px;
+    /* match .container max-width */
     text-align: left;
     padding: 0 var(--spacing-md);
     font-size: 1.1rem;
@@ -111,14 +126,170 @@
     letter-spacing: 0.5px;
 }
 
+/* Table of Contents / Vertical Timeline */
+.toc-timeline {
+    position: fixed;
+    top: 200px;
+    /* Aligned with the initial hero heading height */
+    left: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    z-index: 50;
+}
+
+.toc-heading {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: -0.5rem;
+    /* pull it closer to the dots */
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+.toc-link {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--text-secondary);
+    position: relative;
+}
+
+.toc-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0.5;
+    /* Visible by default, but slightly faded */
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    transform: translateX(-10px);
+}
+
+.toc-link:hover .toc-text,
+.toc-link.active .toc-text {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.toc-link.active .toc-text {
+    background: var(--point-gradient, #38bdf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+.toc-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--text-secondary);
+    background: #05050A;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+/* Vertical line connecting dots */
+.toc-link:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    /* Bottom of the dot */
+    left: 5px;
+    /* Center of the dot (12px width / 2 - 1px line width) */
+    width: 2px;
+    height: 1.5rem;
+    /* Matches the gap */
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 1;
+}
+
+.toc-link:hover .toc-dot {
+    border-color: var(--point-color, #38bdf8);
+}
+
+.toc-link.active .toc-dot {
+    background: var(--point-color, #38bdf8);
+    border-color: var(--point-color, #38bdf8);
+    box-shadow: 0 0 10px var(--point-color, #38bdf8);
+}
+
+/* TOC Action Buttons */
+.toc-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.toc-btn {
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: var(--font-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    width: 100%;
+    border: none;
+}
+
+.toc-btn.outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.toc-btn.outline:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.toc-btn.primary {
+    background: linear-gradient(135deg, #38bdf8, #818cf8);
+    color: #05050A;
+    /* Dark text for contrast */
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+    background-size: 200% 200%;
+    transition: all 0.4s ease;
+}
+
+.toc-btn.primary:hover {
+    background-position: 100% 100%;
+    box-shadow: 0 0 15px rgba(129, 140, 248, 0.7);
+    transform: translateY(-2px);
+}
+
+.toc-email {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    text-align: center;
+    margin-top: -0.1rem;
+    opacity: 1;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
 /* Responsive Sticky Nav */
 @media (max-width: 768px) {
     .sticky-nav {
         padding: 1rem;
     }
-    
+
     .nav-title {
         font-size: 0.95rem;
-        text-align: left;
+        text-align: center;
+    }
+
+    .toc-timeline {
+        display: none;
+        /* Hide on smaller screens to prevent overlap */
     }
 }
