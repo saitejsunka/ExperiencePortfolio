@@ -42,9 +42,12 @@ resource "google_compute_global_forwarding_rule" "default_frontend" {
 
 # 6. Create Google Managed SSL Certificate for Custom Domain
 resource "google_compute_managed_ssl_certificate" "frontend_cert" {
-  name = "expo-frontend-ssl-cert"
+  name = "expo-frontend-ssl-certificate"
   managed {
     domains = ["saitejsunka.com"]
+  }
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
