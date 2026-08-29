@@ -28,3 +28,5 @@ module "infrastructure_components" {
   db_password = var.db_password
   db_user     = var.db_user
 }
+
+
