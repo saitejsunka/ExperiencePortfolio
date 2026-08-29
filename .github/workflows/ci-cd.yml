@@ -186,3 +186,8 @@ jobs:
         run: |
           gcloud storage rsync -r frontend/ gs://experienceportfolio-frontend-assets/
 
+      - name: Invalidate Cloud CDN Cache
+        run: |
+          gcloud compute url-maps invalidate-cdn-cache expo-frontend-url-map \
+            --path "/*" \
+            --async
