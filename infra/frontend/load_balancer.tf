@@ -21,10 +21,20 @@ resource "google_compute_url_map" "default_frontend" {
   default_service = google_compute_backend_bucket.default_frontend.id
 }
 
-# 4. Create the HTTP Proxy
+# 4. Create the URL Map for HTTP to HTTPS redirect
+resource "google_compute_url_map" "http_redirect" {
+  name = "expo-frontend-http-redirect"
+  default_url_redirect {
+    https_redirect         = true
+    redirect_response_code = "MOVED_PERMANENTLY_DEFAULT"
+    strip_query            = false
+  }
+}
+
+# 4b. Create the HTTP Proxy (uses the redirect URL Map)
 resource "google_compute_target_http_proxy" "default_frontend" {
   name    = "expo-frontend-http-proxy"
-  url_map = google_compute_url_map.default_frontend.id
+  url_map = google_compute_url_map.http_redirect.id
 }
 
 # 5. Create the Global Forwarding Rule (The frontend listener)
