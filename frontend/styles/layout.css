@@ -1,0 +1,48 @@
+/* Canvas Background */
+#bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none; /* Let clicks pass through to content */
+}
+
+/* Main Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-md);
+    position: relative;
+    z-index: 2;
+}
+
+/* Header Section */
+.hero {
+    text-align: center;
+    margin-bottom: 6rem;
+    padding-top: 4rem;
+}
+
+.hero h1 {
+    font-size: 4rem;
+    background: linear-gradient(-45deg, #94a3b8 25%, #ffffff 50%, #94a3b8 75%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: text-shimmer 4s linear infinite;
+}
+
+@keyframes text-shimmer {
+    to {
+        background-position: 200% center;
+    }
+}
+
+.hero p {
+    font-size: 1.25rem;
+    max-width: 600px;
+    margin: 0 auto;
+}

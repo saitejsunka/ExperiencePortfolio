@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Experience Portfolio highlighting massive scale backend engineering.">
+    <title>Software Engineering Experience</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <!-- Modular CSS -->
+    <link rel="stylesheet" href="styles/variables.css">
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/components/infographic.css">
+</head>
+<body>
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Sai Tej Sunkara - Portfolio</h1>
+            <p>Architecting resilient, ultra-low latency distributed systems that thrive under planetary-scale traffic spikes.</p>
+        </section>
+
+        <!-- Experience Infographics -->
+        <section id="experience" class="infographics-wrapper">
+            
+            <!-- Point 1: Layout -->
+            <article class="infographic-section" id="point-1">
+                
+                <!-- Section Header -->
+                <div class="section-header" style="text-align: center; margin-bottom: 1rem;">
+                    <div class="company-badge amazon" style="display: inline-block;">Amazon ECommerce Foundation Org</div>
+                    <h2 class="bento-title" style="margin-top: 1rem; font-size: 2.5rem;">Cache Stampede Eliminated</h2>
+                </div>
+                
+                <!-- Graph Card (Right below heading, no background) -->
+                <div class="architecture-pane" style="width: 100%; margin-bottom: 2rem;">
+                    <div class="svg-container">
+                        <!-- SVG Canvas -->
+                        <svg class="arch-svg" viewBox="0 -20 800 320" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Grid Lines -->
+                            <line x1="50" y1="280" x2="750" y2="280" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                            <line x1="50" y1="180" x2="750" y2="180" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                            <line x1="50" y1="80" x2="750" y2="80" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                            <line x1="50" y1="280" x2="50" y2="20" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            
+                            <!-- X Axis Labels -->
+                            <text x="50" y="295" fill="#00A8E1" font-family="Inter" font-weight="bold" font-size="10" text-anchor="middle">11PM</text>
+                            <text x="225" y="295" fill="#fff" font-family="Inter" font-weight="bold" font-size="10" text-anchor="middle">12AM</text>
+                            <text x="400" y="295" fill="#94a3b8" font-family="Inter" font-size="10" text-anchor="middle">1AM</text>
+                            <text x="575" y="295" fill="#94a3b8" font-family="Inter" font-size="10" text-anchor="middle">2AM</text>
+                            <text x="750" y="295" fill="#FF9900" font-family="Inter" font-weight="bold" font-size="10" text-anchor="middle">3AM</text>
+                            
+                            <!-- Y Axis Label -->
+                            <text x="-150" y="35" fill="#94a3b8" font-family="Inter" font-size="10" transform="rotate(-90)" text-anchor="middle">Traffic (TPS)</text>
+
+                            <!-- Gradient for color transition exactly at 12:00 AM (25% along the path width) -->
+                            <defs>
+                                <linearGradient id="primeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="25%" stop-color="#00A8E1" />
+                                    <stop offset="25.01%" stop-color="#FF9900" />
+                                    <stop offset="100%" stop-color="#FF9900" />
+                                </linearGradient>
+                            </defs>
+
+                            <!-- Vertical 12:00 AM Divider -->
+                            <line x1="225" y1="20" x2="225" y2="280" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-dasharray="4"/>
+    
+                            <!-- Animated Prime Day Traffic Curve (Single continuous path stretched to 800px width) -->
+                            <path class="traffic-curve-animated" d="M 50 72 C 137 72, 137 33, 225 33 C 350 33, 400 254, 575 254 C 625 254, 675 248, 750 254" fill="none" stroke="url(#primeGradient)" stroke-width="3"/>
+                            
+                            <!-- Peak Label -->
+                            <text x="225" y="-5" fill="#ef4444" font-family="Inter" font-weight="bold" font-size="10" text-anchor="middle">100% Prime Day Cache Invalidated</text>
+                            <text x="225" y="20" fill="#fff" font-family="Inter" font-weight="bold" font-size="12" text-anchor="middle">95K TPS Peak</text>
+                            
+                            <!-- Baseline Labels -->
+                            <text x="45" y="75" fill="#00A8E1" font-family="Inter" font-size="10" text-anchor="end">80K</text>
+                            <text x="755" y="257" fill="#FF9900" font-family="Inter" font-size="10" text-anchor="start">10K</text>
+                            
+                            <!-- Region Labels -->
+                            <text x="137" y="235" fill="#fff" font-family="Inter" font-size="10" text-anchor="middle">Prime Day Cache</text>
+                            <text x="137" y="260" fill="#00A8E1" font-family="Inter" font-weight="600" font-size="12" text-anchor="middle">Prime Day 2026</text>
+                            
+                            <text x="550" y="60" fill="#FF9900" font-family="Inter" font-weight="600" font-size="12" text-anchor="middle">Post Prime Day 2026</text>
+                            <text x="550" y="75" fill="#fff" font-family="Inter" font-size="9" text-anchor="middle">Rebuilding cache using automatic lever pull +</text>
+                            <text x="550" y="87" fill="#fff" font-family="Inter" font-size="9" text-anchor="middle">pre-warmed cache + request coalescing + TTL jitter</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Bottom: Metrics & Tech -->
+                <div class="bento-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    
+                    <div class="bento-item bento-metric">
+                        <span class="metric-value gradient-text">95K</span>
+                        <span class="metric-label">TPS Peak Load<br><span style="color: #FF9900; font-weight: 600;">Prime Day 2026</span></span>
+                    </div>
+
+                    <div class="bento-item bento-metric">
+                        <span class="metric-value">45ms</span>
+                        <span class="metric-label">P99 Read Latency<br>(Down from 800ms)</span>
+                    </div>
+
+                    <div class="bento-item bento-tech">
+                        <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 1rem; line-height: 1.5;">
+                            <strong>Upon a cache miss, a lock prevents all concurrent threads from hitting the database simultaneously. A single thread fetches the data, hydrates the cache, and resolves all waiting requests, eliminating the stampede.</strong>
+                        </p>
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <span class="tech-pill">Request Coalescing</span>
+                            <span class="tech-pill">TTL Jitter</span>
+                            <span class="tech-pill">Pre-warmed Redis</span>
+                        </div>
+                    </div>
+
+                </div>
+            </article>
+
+            <!-- Future points will go here -->
+            
+        </section>
+    </main>
+
+    <script type="module" src="scripts/main.js"></script>
+</body>
+</html>

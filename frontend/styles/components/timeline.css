@@ -1,0 +1,86 @@
+/* Vertical Glowing Timeline */
+.timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+/* The vertical line */
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 24px;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 1;
+}
+
+/* The glowing progress line (animated via JS) */
+.timeline-progress {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 24px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent-amazon), var(--accent-infosys));
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.6);
+    transform-origin: top;
+    transform: scaleY(0); /* Starts at 0 height */
+    z-index: 2;
+    transition: transform 0.1s ease-out; /* Smooth scrubbing */
+}
+
+/* Timeline Item Container */
+.timeline-item {
+    position: relative;
+    padding-left: 60px;
+    margin-bottom: 4rem;
+}
+
+/* The Node/Dot on the timeline */
+.timeline-node {
+    position: absolute;
+    left: 17px; /* 24px (line) - 8px (radius) + 1px border */
+    top: 30px; /* Align with card header */
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--bg-dark);
+    border: 2px solid var(--text-highlight);
+    z-index: 3;
+    transition: all 0.3s ease;
+}
+
+/* Active Node State */
+.timeline-item.active .timeline-node {
+    background: var(--text-highlight);
+    box-shadow: 0 0 15px var(--glow-primary);
+}
+
+.timeline-item.amazon.active .timeline-node {
+    border-color: var(--accent-amazon);
+    background: var(--accent-amazon);
+    box-shadow: 0 0 20px var(--glow-amazon);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .timeline::before, .timeline-progress {
+        left: 16px;
+    }
+    .timeline-node {
+        left: 9px;
+    }
+    .timeline-item {
+        padding-left: 40px;
+    }
+    .exp-header {
+        flex-direction: column;
+    }
+    .exp-date {
+        margin-top: 8px;
+    }
+}

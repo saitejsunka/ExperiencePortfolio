@@ -1,0 +1,28 @@
+:root {
+    /* Color Palette */
+    --bg-dark: #05050A; /* Deep space black */
+    --bg-card: rgba(20, 20, 30, 0.4);
+    --bg-card-hover: rgba(30, 30, 45, 0.6);
+    
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-highlight: #38bdf8;
+    
+    --accent-amazon: #FF9900;
+    --accent-infosys: #007CC3;
+    
+    --glow-primary: rgba(56, 189, 248, 0.5);
+    --glow-amazon: rgba(255, 153, 0, 0.4);
+    
+    /* Typography */
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    /* Spacing & Layout */
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 4rem;
+    
+    --border-radius: 16px;
+    --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+}
