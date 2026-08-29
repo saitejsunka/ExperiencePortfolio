@@ -27,13 +27,13 @@ func ContinuousMonitorDatabaseConnection(ctx context.Context, primaryDB, replica
 				if err := primaryDB.Ping(); err != nil {
 					logger.Error(ctx, fmt.Sprintf("CRITICAL: Primary database connection lost: %v", err))
 				} else {
-					logger.Info(ctx, "Primary database connection is perfectly healthy.")
+					logger.Info(ctx, "Primary Write Database Tunnel Active!")
 				}
 
 				if err := replicaDB.Ping(); err != nil {
 					logger.Error(ctx, fmt.Sprintf("CRITICAL: Replica database connection lost: %v", err))
 				} else {
-					logger.Info(ctx, "Replica database connection is perfectly healthy.")
+					logger.Info(ctx, "Replica Read Database Tunnel Active!")
 				}
 			}
 		}
