@@ -35,3 +35,31 @@ resource "google_compute_global_forwarding_rule" "default_frontend" {
   ip_address            = google_compute_global_address.default_frontend.address
   load_balancing_scheme = "EXTERNAL_MANAGED"
 }
+
+# ---------------------------------------------------------
+# HTTPS Configuration (SSL & Custom Domain)
+# ---------------------------------------------------------
+
+# 6. Create Google Managed SSL Certificate for Custom Domain
+resource "google_compute_managed_ssl_certificate" "frontend_cert" {
+  name = "expo-frontend-ssl-cert"
+  managed {
+    domains = ["saitejsunka.com"]
+  }
+}
+
+# 7. Create the HTTPS Proxy
+resource "google_compute_target_https_proxy" "frontend_https" {
+  name             = "expo-frontend-https-proxy"
+  url_map          = google_compute_url_map.default_frontend.id
+  ssl_certificates = [google_compute_managed_ssl_certificate.frontend_cert.id]
+}
+
+# 8. Create the Global Forwarding Rule for HTTPS (port 443)
+resource "google_compute_global_forwarding_rule" "frontend_https" {
+  name                  = "expo-frontend-https-forwarding-rule"
+  target                = google_compute_target_https_proxy.frontend_https.id
+  port_range            = "443"
+  ip_address            = google_compute_global_address.default_frontend.address
+  load_balancing_scheme = "EXTERNAL_MANAGED"
+}
