@@ -281,5 +281,22 @@
     }
     .architecture-pane {
         order: 1;
-    }
 }
+
+/* SVG Path Line Flow Animations */
+.path-line {
+    animation: dashMove 2s linear infinite;
+}
+
+@keyframes dashMove {
+    from { stroke-dashoffset: 24; }
+    to { stroke-dashoffset: 0; }
+}
+
+/* CQRS Flow Path Animations */
+.cqrs-flow {
+    stroke-dasharray: 8 6;
+    animation: dashMove 1.5s linear infinite;
+}
+
+/* We can safely remove the opacity fade since a continuous flowing dash looks great and is 100% reliable */
