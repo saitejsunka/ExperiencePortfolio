@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Fade in the section
                 entry.target.classList.add('visible');
                 
-                if (entry.target.id === 'point-1') {
+                if (entry.target.id === 'cache-stampede') {
                     // CSS animations handle the rest when .visible is added
                 }
 
@@ -83,4 +83,23 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.infographic-section').forEach(section => {
         tocObserver.observe(section);
     });
+
+    // 5. Scroll to Top Button Logic
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+    if (scrollTopBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
 });

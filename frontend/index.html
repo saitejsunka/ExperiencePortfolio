@@ -27,23 +27,23 @@
     <!-- Table of Contents (Fixed Left) -->
     <aside id="toc-timeline" class="toc-timeline">
         <h3 class="toc-heading">My Amazon Experience</h3>
-        <a href="#point-1" class="toc-link" style="--point-color: #38bdf8; --point-gradient: linear-gradient(135deg, #38bdf8, #818cf8);">
+        <a href="#cache-stampede" class="toc-link" style="--point-color: #38bdf8; --point-gradient: linear-gradient(135deg, #38bdf8, #818cf8);">
             <span class="toc-dot"></span>
-            <span class="toc-text">Cache Stampede Eliminated</span>
+            <span class="toc-text">Eliminated Cache Stampede</span>
         </a>
-        <a href="#point-2" class="toc-link" style="--point-color: #FF9900; --point-gradient: linear-gradient(135deg, #FF9900, #ff5e62);">
+        <a href="#zero-data-loss" class="toc-link" style="--point-color: #FF9900; --point-gradient: linear-gradient(135deg, #FF9900, #ff5e62);">
             <span class="toc-dot"></span>
             <span class="toc-text">Zero Data Loss Under Massive Load</span>
         </a>
-        <a href="#point-3" class="toc-link" style="--point-color: #10b981; --point-gradient: linear-gradient(135deg, #10b981, #34d399);">
+        <a href="#fault-tolerance" class="toc-link" style="--point-color: #10b981; --point-gradient: linear-gradient(135deg, #10b981, #34d399);">
             <span class="toc-dot"></span>
             <span class="toc-text">System Resilience & Fault Tolerance</span>
         </a>
-        <a href="#point-4" class="toc-link" style="--point-color: #FF9900; --point-gradient: linear-gradient(135deg, #FF9900, #ff5e62);">
+        <a href="#eventual-consistency" class="toc-link" style="--point-color: #FF9900; --point-gradient: linear-gradient(135deg, #FF9900, #ff5e62);">
             <span class="toc-dot"></span>
             <span class="toc-text">Eventual Consistency at Scale</span>
         </a>
-        <a href="#point-5" class="toc-link" style="--point-color: #8b5cf6; --point-gradient: linear-gradient(135deg, #00A8E1, #8b5cf6);">
+        <a href="#zero-downtime-migration" class="toc-link" style="--point-color: #8b5cf6; --point-gradient: linear-gradient(135deg, #00A8E1, #8b5cf6);">
             <span class="toc-dot"></span>
             <span class="toc-text">Zero-Downtime Migration</span>
         </a>
@@ -64,18 +64,28 @@
             <p>Architecting resilient, ultra-low latency distributed systems that thrive under planetary-scale traffic spikes at Amazon.</p>
             <div class="company-badge amazon" style="display: inline-block; margin-top: 1rem;">SDE at ECommerce Foundation Org</div>
             <div class="company-badge infosys" style="display: inline-block; margin-top: 1rem;">Former Senior Systems Engineer at Infosys</div>
+
+            <!-- Mobile Contact Actions (Hidden on Desktop) -->
+            <div class="mobile-contact-actions">
+                <button class="toc-btn primary" onclick="window.open('https://docs.google.com/document/d/1TJUXCSh4vWlTFl5Py5vRlGtkN7U7PvW35WcjzFXX8bw/edit?usp=sharing', '_blank')">View My Resume</button>
+                <button class="toc-btn outline" onclick="window.location.href='mailto:saitejsunka@gmail.com';">Send email to Sai</button>
+                <div class="mobile-contact-info">
+                    <span class="toc-email"><strong>Email: </strong>saitejsunka@gmail.com</span>
+                    <span class="toc-email"><strong>Phone: </strong>+1 206-440-6594</span>
+                </div>
+            </div>
         </section>
 
         <!-- Experience Infographics -->
         <section id="experience" class="infographics-wrapper">
             
             <!-- Point 1: Layout -->
-            <article class="infographic-section" id="point-1">
+            <article class="infographic-section" id="cache-stampede">
                 
                 <!-- Section Header -->
                 <div class="section-header" style="text-align: center; margin-bottom: 1rem;">
                 
-                    <h2 class="bento-title" style="margin-top: 1rem; font-size: 2.5rem;">Cache Stampede Eliminated</h2>
+                    <h2 class="bento-title" style="margin-top: 1rem; font-size: 2.5rem;">Eliminated Cache Stampede on Amazon Prime Day 2026</h2>
                 </div>
                 
                 <!-- Graph Card (Right below heading, no background) -->
@@ -161,11 +171,11 @@
             </article>
 
             <!-- Point 2: CQRS & Event Sourcing Architecture -->
-            <article class="infographic-section" id="point-2" style="margin-top: 6rem;">
+            <article class="infographic-section" id="zero-data-loss" style="margin-top: 6rem;">
                 
                 <!-- Section Header -->
                 <div class="section-header" style="text-align: center; margin-bottom: 1rem;">
-                    <h2 class="bento-title" style="margin-top: 1rem; font-size: 2.5rem;">Zero Data Loss Under Massive Load</h2>
+                    <h2 class="bento-title" style="margin-top: 1rem; font-size: 2.5rem;">No Data Loss Under Massive Writes on Read-Heavy Pricing DB</h2>
                 </div>
                 
                 <!-- Graph Card (Right below heading, no background) -->
@@ -280,7 +290,7 @@
             </article>
 
         <!-- Point 3: Resilience & Fault Tolerance -->
-        <article class="infographic-section" id="point-3" style="margin-top: 6rem; ">
+        <article class="infographic-section" id="fault-tolerance" style="margin-top: 6rem; ">
             
             <!-- Section Header -->
             <div class="section-header" style="text-align: center; margin-bottom: 1rem;">
@@ -401,7 +411,7 @@
             </div>
         </article>
         <!-- Point 4: Data Consistency (Transactional Outbox & CDC) -->
-        <article class="infographic-section" id="point-4" style="margin-top: 6rem;">
+        <article class="infographic-section" id="eventual-consistency" style="margin-top: 6rem;">
             
             <!-- Section Header -->
             <div class="section-header" style="text-align: center; margin-bottom: 1rem;">
@@ -538,7 +548,7 @@
 
             </div>
         <!-- Point 5: Zero-Downtime Migration (PostgreSQL to NoSQL) -->
-        <article class="infographic-section" id="point-5" style="margin-top: 6rem; margin-bottom: 6rem;">
+        <article class="infographic-section" id="zero-downtime-migration" style="margin-top: 6rem; margin-bottom: 6rem;">
             
             <!-- Section Header -->
             <div class="section-header" style="text-align: center; margin-bottom: 1rem;">
@@ -681,10 +691,17 @@
                 </div>
             </div>
         </article>
-
-
     </main>
 
+    <!-- Scroll to Top Button -->
+    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top" title="Scroll to top">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="width: 24px; height: 24px;">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+        </svg>
+    </button>
+
+    <!-- Link JS Files -->
     <script type="module" src="scripts/main.js?v=1"></script>
+    </div>
 </body>
 </html>
