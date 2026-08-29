@@ -9,7 +9,7 @@ export function initCanvasAnimation() {
     const ctx = canvas.getContext('2d');
     let width, height;
     let particles = [];
-    const maxParticles = 60; // Keep low for performance
+    const maxParticles = 35; // Lowered for better performance
 
     function resize() {
         width = canvas.width = window.innerWidth;

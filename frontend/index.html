@@ -17,11 +17,17 @@
     <link rel="stylesheet" href="styles/components/infographic.css">
 </head>
 <body>
+    <!-- Sticky Navigation Bar (Appears on scroll) -->
+    <nav id="sticky-nav" class="sticky-nav">
+        <div class="nav-title">Sai Tej Sunkara - Backend Developer</div>
+    </nav>
+
     <main class="container">
         <!-- Hero Section -->
         <section class="hero">
             <h1>Sai Tej Sunkara - Portfolio</h1>
-            <p>Architecting resilient, ultra-low latency distributed systems that thrive under planetary-scale traffic spikes.</p>
+            <p>Architecting resilient, ultra-low latency distributed systems that thrive under planetary-scale traffic spikes at Amazon.</p>
+            <div class="company-badge amazon" style="display: inline-block; margin-top: 1rem;">SDE at ECommerce Foundation Org</div>
         </section>
 
         <!-- Experience Infographics -->
@@ -32,7 +38,7 @@
                 
                 <!-- Section Header -->
                 <div class="section-header" style="text-align: center; margin-bottom: 1rem;">
-                    <div class="company-badge amazon" style="display: inline-block;">Amazon ECommerce Foundation Org</div>
+                
                     <h2 class="bento-title" style="margin-top: 1rem; font-size: 2.5rem;">Cache Stampede Eliminated</h2>
                 </div>
                 
@@ -85,8 +91,8 @@
                             <text x="137" y="260" fill="#00A8E1" font-family="Inter" font-weight="600" font-size="12" text-anchor="middle">Prime Day 2026</text>
                             
                             <text x="550" y="60" fill="#FF9900" font-family="Inter" font-weight="600" font-size="12" text-anchor="middle">Post Prime Day 2026</text>
-                            <text x="550" y="75" fill="#fff" font-family="Inter" font-size="9" text-anchor="middle">Rebuilding cache using automatic lever pull +</text>
-                            <text x="550" y="87" fill="#fff" font-family="Inter" font-size="9" text-anchor="middle">pre-warmed cache + request coalescing + TTL jitter</text>
+                            <text x="550" y="75" fill="#fff" font-family="Inter" font-size="9" text-anchor="middle">Automated lever pulling for injecting pre-warmed cache,</text>
+                            <text x="550" y="87" fill="#fff" font-family="Inter" font-size="9" text-anchor="middle">coupled with Request Coalescing &amp; TTL Jitter</text>
                         </svg>
                     </div>
                 </div>
@@ -118,9 +124,240 @@
                 </div>
             </article>
 
-            <!-- Future points will go here -->
+            <!-- Point 2: CQRS & Event Sourcing Architecture -->
+            <article class="infographic-section" id="point-2" style="margin-top: 6rem;">
+                
+                <!-- Section Header -->
+                <div class="section-header" style="text-align: center; margin-bottom: 1rem;">
+                    <h2 class="bento-title" style="margin-top: 1rem; font-size: 2.5rem;">Zero Data Loss Under Massive Load</h2>
+                </div>
+                
+                <!-- Graph Card (Right below heading, no background) -->
+                <div class="architecture-pane" style="width: 100%; margin-bottom: 2rem;">
+                    <div class="svg-container">
+                        <!-- SVG Canvas -->
+                        <svg class="arch-svg cqrs-anim-svg" viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg">
+                            
+                            <!-- Static Background Lines -->
+                            <path d="M 120 155 L 200 155" fill="none" stroke="rgba(255,153,0,0.1)" stroke-width="2"/>
+                            <path d="M 250 140 Q 250 70 360 70" fill="none" stroke="rgba(255,153,0,0.1)" stroke-width="2"/>
+                            <path d="M 460 70 L 605 70" fill="none" stroke="rgba(255,153,0,0.1)" stroke-width="2"/>
+                            <path d="M 410 90 Q 410 160 600 160" fill="none" stroke="rgba(255,153,0,0.1)" stroke-width="2"/>
+                            <path d="M 120 185 L 200 185" fill="none" stroke="rgba(0,168,225,0.1)" stroke-width="2"/>
+                            <path d="M 300 170 L 600 170" fill="none" stroke="rgba(0,168,225,0.1)" stroke-width="2"/>
+                            <path d="M 650 190 L 650 270" fill="none" stroke="rgba(0,168,225,0.1)" stroke-width="2" stroke-dasharray="4 4"/>
+                            
+                            <!-- Nodes -->
+                            <!-- Client -->
+                            <rect x="20" y="140" width="100" height="60" rx="8" fill="rgba(255, 255, 255, 0.1)" stroke="#cbd5e1" stroke-width="2"/>
+                            <text x="70" y="175" fill="#fff" font-family="Inter" font-size="12" text-anchor="middle">Client API</text>
+
+                            <!-- Backend Server -->
+                            <rect x="200" y="140" width="100" height="60" rx="8" fill="rgba(148, 163, 184, 0.1)" stroke="#94a3b8" stroke-width="2"/>
+                            <text x="250" y="175" fill="#fff" font-family="Inter" font-weight="bold" font-size="14" text-anchor="middle">Server</text>
+                            
+                            <!-- PubSub Queue -->
+                            <rect x="360" y="50" width="100" height="40" rx="20" fill="rgba(255, 153, 0, 0.1)" stroke="#FF9900" stroke-width="2"/>
+                            <text x="410" y="75" fill="#FF9900" font-family="Inter" font-weight="bold" font-size="12" text-anchor="middle">PubSub</text>
+                            
+                            <!-- Cache -->
+                            <rect x="600" y="150" width="100" height="40" rx="8" fill="rgba(139, 92, 246, 0.1)" stroke="#8b5cf6" stroke-width="2"/>
+                            <text x="650" y="175" fill="#8b5cf6" font-family="Inter" font-weight="bold" font-size="12" text-anchor="middle">Cache Layer</text>
+
+                            <!-- Primary DB (Cylinder Shape) -->
+                            <ellipse cx="650" cy="40" rx="45" ry="12" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="2"/>
+                            <path d="M 605 40 L 605 80 A 45 12 0 0 0 695 80 L 695 40" fill="rgba(239, 68, 68, 0.1)" stroke="#ef4444" stroke-width="2"/>
+                            <text x="650" y="70" fill="#ef4444" font-family="Inter" font-weight="bold" font-size="12" text-anchor="middle">Primary DB</text>
+                            
+                            <!-- Read Replica DB (Cylinder Shape) -->
+                            <ellipse cx="650" cy="270" rx="45" ry="12" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981" stroke-width="2"/>
+                            <path d="M 605 270 L 605 310 A 45 12 0 0 0 695 310 L 695 270" fill="rgba(16, 185, 129, 0.1)" stroke="#10b981" stroke-width="2"/>
+                            <text x="650" y="300" fill="#10b981" font-family="Inter" font-weight="bold" font-size="12" text-anchor="middle">Read Replica</text>
+
+                            <!-- Animated Flow Lines -->
+                            
+                            <!-- 1. Write Request (Client to Server to Queue) -->
+                            <path class="cqrs-flow write-cmd" d="M 120 155 L 200 155" fill="none" stroke="#FF9900" stroke-width="3"/>
+                            <text x="160" y="145" fill="#FF9900" font-family="Inter" font-size="10" font-weight="bold" text-anchor="middle">/write</text>
+                            <path class="cqrs-flow write-cmd delay-1" d="M 250 140 Q 250 70 360 70" fill="none" stroke="#FF9900" stroke-width="3"/>
+                            
+                            <!-- 2. Event Sourcing / Fan out (Queue to DB and Cache) -->
+                            <path class="cqrs-flow write-fan delay-2" d="M 460 70 L 605 70" fill="none" stroke="#ef4444" stroke-width="3"/>
+                            <path class="cqrs-flow write-fan delay-2" d="M 410 90 Q 410 160 600 160" fill="none" stroke="#8b5cf6" stroke-width="3"/>
+
+                            <!-- 3. Read Request (Client to Server to Cache) -->
+                            <path class="cqrs-flow read-req delay-3" d="M 120 185 L 200 185" fill="none" stroke="#00A8E1" stroke-width="3"/>
+                            <text x="160" y="175" fill="#00A8E1" font-family="Inter" font-size="10" font-weight="bold" text-anchor="middle">/read</text>
+                            <path class="cqrs-flow read-req delay-4" d="M 300 170 L 600 170" fill="none" stroke="#00A8E1" stroke-width="3"/>
+                            
+                            <!-- 4. Cache Miss Fallback to Replica -->
+                            <path class="cqrs-flow cache-miss delay-4" d="M 650 190 L 650 270" fill="none" stroke="#10b981" stroke-width="3"/>
+
+                            <!-- 5. Sync connection from Primary to Replica -->
+                            <path d="M 695 60 Q 770 170 695 290" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2" stroke-dasharray="4 4"/>
+                            <text x="735" y="180" fill="#cbd5e1" font-family="Inter" font-size="10" font-weight="bold" text-anchor="middle">/sync</text>
+                            
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Bottom: Metrics & Tech -->
+                <div class="bento-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    
+                    <div class="bento-item bento-metric">
+                        <span class="metric-value gradient-text" style="background: linear-gradient(135deg, #FF9900, #ff5e62); -webkit-background-clip: text;">500K</span>
+                        <span class="metric-label">Events/Min<br><span style="color: #FF9900; font-weight: 600;">Peak Ingestion Spike</span></span>
+                    </div>
+
+                    <div class="bento-item bento-metric">
+                        <span class="metric-value" style="color: #10b981;">0%</span>
+                        <span class="metric-label">Message Loss on Write Spikes<br>(Complete Data Integrity)</span>
+                    </div>
+
+                    <div class="bento-item bento-tech">
+                        <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 1rem; line-height: 1.5;">
+                            <strong>CQRS & Event Sourcing:</strong> Re-architected the backend to separate Read and Write paths. Writes hit an async PubSub queue for an immediate client response, safely buffering spikes and eventually fan-out syncing to the Primary DB and Cache. Reads prioritize the Cache, falling back to a Read Replica to eliminate contention.
+                        </p>
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <span class="tech-pill">CQRS Pattern</span>
+                            <span class="tech-pill">Event Sourcing</span>
+                            <span class="tech-pill">PubSub Queue</span>
+                            <span class="tech-pill">Read Replica</span>
+                        </div>
+                    </div>
+
+                </div>
+            </article>
+
+        <!-- Point 3: Data Consistency (Transactional Outbox & CDC) -->
+        <article class="infographic-section" id="point-3" style="margin-top: 6rem;">
             
-        </section>
+            <!-- Section Header -->
+            <div class="section-header" style="text-align: center; margin-bottom: 1rem;">
+                <h2 class="bento-title" style="margin-top: 1rem; font-size: 2.5rem;">Eventual Consistency at Scale</h2>
+            </div>
+
+            <!-- Graph Card (Right below heading, no background) -->
+            <div class="architecture-pane" style="width: 100%; margin-bottom: 2rem;">
+                <div class="svg-container">
+                    <!-- SVG Canvas -->
+                    <svg class="arch-svg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Base Grid -->
+                        <defs>
+                            <pattern id="grid3" width="40" height="40" patternUnits="userSpaceOnUse">
+                                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                            </pattern>
+                            
+                            <linearGradient id="cdcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#00A8E1" />
+                                <stop offset="100%" stop-color="#FF9900" />
+                            </linearGradient>
+
+                            <linearGradient id="dbGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#05050A" />
+                                <stop offset="100%" stop-color="#00A8E1" stop-opacity="0.2"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="100%" height="100%" fill="url(#grid3)" />
+
+                        <!-- App Service Box -->
+                        <g transform="translate(50, 150)">
+                            <rect width="200" height="100" rx="10" fill="rgba(255,255,255,0.02)" stroke="#FF9900" stroke-width="2"/>
+                            <text x="100" y="55" fill="#FFF" font-family="Inter, sans-serif" font-size="18" font-weight="600" text-anchor="middle">Application Service</text>
+                        </g>
+
+                        <!-- Database Cylinder (Contains 2 sections) -->
+                        <g transform="translate(400, 70)">
+                            <!-- Cylinder Base -->
+                            <path d="M0,40 C0,60 200,60 200,40 L200,220 C200,240 0,240 0,220 Z" fill="url(#dbGrad2)" stroke="#00A8E1" stroke-width="2"/>
+                            <!-- Cylinder Top -->
+                            <ellipse cx="100" cy="40" rx="100" ry="20" fill="#05050A" stroke="#00A8E1" stroke-width="2"/>
+                            
+                            <text x="100" y="45" fill="#FFF" font-family="Inter, sans-serif" font-size="16" font-weight="600" text-anchor="middle">Database</text>
+                            
+                            <!-- Internal tables -->
+                            <rect x="20" y="80" width="160" height="40" rx="5" fill="rgba(0,168,225,0.1)" stroke="#00A8E1" stroke-width="1"/>
+                            <text x="100" y="105" fill="#00A8E1" font-family="Inter, sans-serif" font-size="14" text-anchor="middle">Business Table</text>
+
+                            <rect x="20" y="140" width="160" height="40" rx="5" fill="rgba(255,153,0,0.1)" stroke="#FF9900" stroke-width="1"/>
+                            <text x="100" y="165" fill="#FF9900" font-family="Inter, sans-serif" font-size="14" text-anchor="middle">Outbox Table</text>
+                        </g>
+
+                        <!-- CDC Process -->
+                        <g transform="translate(400, 360)">
+                            <rect width="200" height="60" rx="10" fill="rgba(255,255,255,0.02)" stroke="url(#cdcGrad)" stroke-width="2" stroke-dasharray="8,4" class="spinning-border"/>
+                            <text x="100" y="36" fill="#FFF" font-family="Inter, sans-serif" font-size="16" font-weight="600" text-anchor="middle">CDC Log Tailing</text>
+                        </g>
+
+                        <!-- Message Broker (Event Bus) -->
+                        <g transform="translate(750, 340)">
+                            <rect width="200" height="100" rx="10" fill="rgba(255,255,255,0.02)" stroke="#FF9900" stroke-width="2"/>
+                            <text x="100" y="55" fill="#FFF" font-family="Inter, sans-serif" font-size="18" font-weight="600" text-anchor="middle">Event Bus</text>
+                        </g>
+
+                        <!-- Connection Lines & Animations -->
+                        
+                        <!-- OLTP Transaction from App to Business Table -->
+                        <path d="M 250 170 L 420 170" class="path-line" fill="none" stroke="#fff" stroke-width="3"/>
+                        <text x="335" y="160" fill="#fff" font-family="Inter, sans-serif" font-size="12" font-weight="600" text-anchor="middle">OLTP Write</text>
+                        <circle r="4" fill="#fff">
+                            <animateMotion dur="2s" repeatCount="indefinite" path="M 250 170 L 420 170"/>
+                        </circle>
+
+                        <!-- DB Internal Write (Business Table to Outbox Table) -->
+                        <path d="M 500 190 L 500 210" class="path-line" fill="none" stroke="#FF9900" stroke-width="2" stroke-dasharray="4,4"/>
+                        <circle r="3" fill="#FF9900">
+                            <animateMotion dur="1s" repeatCount="indefinite" path="M 500 190 L 500 210"/>
+                        </circle>
+
+                        <!-- DB Outbox to CDC (Log Tailing) -->
+                        <path d="M 500 290 L 500 360" class="path-line" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-dasharray="4 4"/>
+                        <text x="510" y="330" fill="rgba(255,255,255,0.5)" font-family="Inter, sans-serif" font-size="12">Tail logs</text>
+                        <circle r="4" fill="#FF9900">
+                            <animateMotion dur="1.5s" repeatCount="indefinite" path="M 500 290 L 500 360"/>
+                        </circle>
+
+                        <!-- CDC to Event Bus -->
+                        <path d="M 600 390 L 750 390" class="path-line" fill="none" stroke="#FF9900" stroke-width="3" stroke-dasharray="5,5"/>
+                        <text x="675" y="380" fill="#FF9900" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle">/publish</text>
+                        <circle r="6" fill="#FF9900">
+                            <animateMotion dur="1.5s" repeatCount="indefinite" path="M 600 390 L 750 390"/>
+                        </circle>
+                        <circle r="6" fill="#FF9900">
+                            <animateMotion dur="1.5s" begin="0.75s" repeatCount="indefinite" path="M 600 390 L 750 390"/>
+                        </circle>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Bottom: Metrics & Tech -->
+            <div class="bento-grid" style="grid-template-columns: repeat(2, 1fr);">
+                
+                <div class="bento-item bento-metric">
+                    <span class="metric-value gradient-text" style="background: linear-gradient(135deg, #FF9900, #ff5e62); -webkit-background-clip: text;">100%</span>
+                    <span class="metric-label">Eventual Consistency<br><span style="color: #FF9900; font-weight: 600;">Zero Ghost Writes</span></span>
+                </div>
+
+                <div class="bento-item bento-metric">
+                    <span class="metric-value" style="color: #00A8E1;">1M+</span>
+                    <span class="metric-label">Daily Cross-Service Ops<br>(Eliminated Race Conditions)</span>
+                </div>
+
+                <div class="bento-item bento-tech">
+                    <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 1rem; line-height: 1.5;">
+                        <strong>Transactional Outbox & CDC:</strong> Achieved zero data loss by treating the database as the single source of truth for both state and events. Application writes state and events in one atomic transaction. A CDC process tails the SQL logs and reliably pushes the events to the Event Bus.
+                    </p>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <span class="tech-pill">Transactional Outbox</span>
+                        <span class="tech-pill">CDC (Change Data Capture)</span>
+                        <span class="tech-pill">Event-Driven</span>
+                        <span class="tech-pill">SQL Log Tailing</span>
+                    </div>
+                </div>
+
+            </div>
+        </article>
+
     </main>
 
     <script type="module" src="scripts/main.js"></script>

@@ -46,4 +46,19 @@ export function initScrollObserver() {
             }
         });
     }
+
+    // Handle Sticky Navbar visibility
+    const stickyNav = document.getElementById('sticky-nav');
+    const heroTitle = document.querySelector('.hero h1');
+    
+    if (stickyNav && heroTitle) {
+        window.addEventListener('scroll', () => {
+            // When the hero title is scrolled out of the viewing range, show the navbar
+            if (heroTitle.getBoundingClientRect().bottom < 0) {
+                stickyNav.classList.add('scrolled');
+            } else {
+                stickyNav.classList.remove('scrolled');
+            }
+        });
+    }
 }

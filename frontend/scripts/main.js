@@ -31,4 +31,26 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.infographic-section').forEach(section => {
         sectionObserver.observe(section);
     });
+
+    // 3. Handle Sticky Navbar visibility using IntersectionObserver
+    const stickyNav = document.getElementById('sticky-nav');
+    const heroTitle = document.querySelector('.hero h1');
+    
+    if (stickyNav && heroTitle) {
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // If the hero title is NOT intersecting and its bounding box is above the viewport (top < 0)
+                if (!entry.isIntersecting && entry.boundingClientRect.bottom < 0) {
+                    stickyNav.classList.add('scrolled');
+                } else {
+                    stickyNav.classList.remove('scrolled');
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0
+        });
+        
+        navObserver.observe(heroTitle);
+    }
 });

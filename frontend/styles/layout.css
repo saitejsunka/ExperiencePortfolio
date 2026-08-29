@@ -46,3 +46,77 @@
     max-width: 600px;
     margin: 0 auto;
 }
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    .hero p {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+    }
+}
+
+/* Sticky Navigation */
+.sticky-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    
+    /* Solid, opaque moving gradient based on site theme (Deep space black, Tech Blue, Amazon Orange) */
+    background: linear-gradient(270deg, #05050A, #002842, #05050A, #4a2d00, #05050A);
+    background-size: 400% 400%;
+    animation: stickyGradientMove 10s ease infinite;
+    
+    /* Hardware acceleration to prevent scrolling lag */
+    will-change: transform, opacity, background-position;
+    
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 1.2rem;
+    
+    /* Center the title */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Initial state (hidden, slightly moved up) */
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+}
+
+@keyframes stickyGradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.sticky-nav.scrolled {
+    /* Visible state */
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.nav-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    letter-spacing: 0.5px;
+}
+
+/* Responsive Sticky Nav */
+@media (max-width: 768px) {
+    .sticky-nav {
+        padding: 1rem;
+    }
+    
+    .nav-title {
+        font-size: 0.95rem;
+        text-align: center;
+    }
+}
