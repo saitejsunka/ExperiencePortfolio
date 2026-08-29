@@ -61,9 +61,18 @@
     padding: 6px 12px;
     border-radius: 20px;
     margin-bottom: 1rem;
+}
+
+.company-badge.amazon {
     background: rgba(255, 153, 0, 0.15);
     color: var(--accent-amazon);
     border: 1px solid rgba(255, 153, 0, 0.3);
+}
+
+.company-badge.infosys {
+    background: rgba(0, 124, 195, 0.15);
+    color: var(--accent-infosys);
+    border: 1px solid rgba(0, 124, 195, 0.3);
 }
 
 .bento-title {
@@ -299,4 +308,60 @@
     animation: dashMove 1.5s linear infinite;
 }
 
+
 /* We can safely remove the opacity fade since a continuous flowing dash looks great and is 100% reliable */
+
+/* =========================================
+   Point 5: Resilience & Circuit Breaker 
+   ========================================= */
+
+/* The Switch itself flips between connected and disconnected */
+.cb-switch {
+    transform-origin: 40px 65px;
+    animation: switchFlip 6s infinite;
+}
+@keyframes switchFlip {
+    0%, 40% { transform: rotate(0deg); stroke: #10b981; }  /* Closed (Healthy) */
+    45%, 100% { transform: rotate(-45deg); stroke: #ef4444; } /* Open (Tripped) */
+}
+
+/* Primary Traffic flows when healthy, vanishes when tripped */
+.primary-traffic {
+    animation: togglePrimary 6s infinite;
+}
+@keyframes togglePrimary {
+    0%, 40% { opacity: 1; }  
+    45%, 100% { opacity: 0; } 
+}
+
+/* Fallback Traffic appears only when tripped */
+.fallback-traffic {
+    animation: toggleFallback 6s infinite;
+}
+@keyframes toggleFallback {
+    0%, 40% { opacity: 0; }  
+    45%, 100% { opacity: 1; } 
+}
+
+/* Retry pulse occurs while tripped */
+.retry-anim {
+    animation: retryPulse 6s infinite;
+}
+@keyframes retryPulse {
+    0%, 45% { opacity: 0; }
+    55% { opacity: 1; }
+    65% { opacity: 0; }
+    75% { opacity: 1; }
+    85% { opacity: 0; }
+    95% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* Red exclamation point pulse on failing DB */
+.error-ping {
+    animation: errorPulse 0.5s infinite alternate;
+}
+@keyframes errorPulse {
+    from { opacity: 0.3; transform: scale(1); }
+    to { opacity: 1; transform: scale(1.2); }
+}

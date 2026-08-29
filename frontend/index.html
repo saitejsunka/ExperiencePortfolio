@@ -28,6 +28,7 @@
             <h1>Sai Tej Sunkara - Portfolio</h1>
             <p>Architecting resilient, ultra-low latency distributed systems that thrive under planetary-scale traffic spikes at Amazon.</p>
             <div class="company-badge amazon" style="display: inline-block; margin-top: 1rem;">SDE at ECommerce Foundation Org</div>
+            <div class="company-badge infosys" style="display: inline-block; margin-top: 1rem;">Former Senior Systems Engineer at Infosys</div>
         </section>
 
         <!-- Experience Infographics -->
@@ -112,7 +113,7 @@
 
                     <div class="bento-item bento-tech">
                         <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 1rem; line-height: 1.5;">
-                            <strong>Upon a cache miss, a lock prevents all concurrent threads from hitting the database simultaneously. A single thread fetches the data, hydrates the cache, and resolves all waiting requests, eliminating the stampede.</strong>
+                            <strong>Request Coalescing: </strong>Upon a cache miss, a lock prevents all concurrent threads from hitting the database simultaneously. A single thread fetches the data, hydrates the cache, and resolves all waiting requests, eliminating the stampede.
                         </p>
                         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                             <span class="tech-pill">Request Coalescing</span>
@@ -243,8 +244,129 @@
                 </div>
             </article>
 
-        <!-- Point 3: Data Consistency (Transactional Outbox & CDC) -->
-        <article class="infographic-section" id="point-3" style="margin-top: 6rem;">
+        <!-- Point 3: Resilience & Fault Tolerance -->
+        <article class="infographic-section" id="point-3" style="margin-top: 6rem; ">
+            
+            <!-- Section Header -->
+            <div class="section-header" style="text-align: center; margin-bottom: 1rem;">
+                <h2 class="bento-title" style="margin-top: 1rem; font-size: 2.5rem;">System Resilience & Fault Tolerance</h2>
+            </div>
+
+            <!-- Graph Card -->
+            <div class="architecture-pane" style="width: 100%; margin-bottom: 2rem;">
+                <div class="svg-container">
+                    <svg class="arch-svg resilience-svg" viewBox="0 0 800 360" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <pattern id="grid5" width="40" height="40" patternUnits="userSpaceOnUse">
+                                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                            </pattern>
+                            <!-- Gradients -->
+                            <linearGradient id="healthyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#05050A" />
+                                <stop offset="100%" stop-color="#10b981" stop-opacity="0.3"/>
+                            </linearGradient>
+                            <linearGradient id="failGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#05050A" />
+                                <stop offset="100%" stop-color="#ef4444" stop-opacity="0.3"/>
+                            </linearGradient>
+                            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                <polygon points="0 0, 10 3.5, 0 7" fill="#FF9900"/>
+                            </marker>
+                        </defs>
+                        <rect width="100%" height="100%" fill="url(#grid5)" />
+
+                        <!-- 1. API Gateway / App Service -->
+                        <g transform="translate(50, 130)">
+                            <rect width="140" height="100" rx="10" fill="url(#healthyGrad)" stroke="#10b981" stroke-width="2"/>
+                            <text x="70" y="55" fill="#FFF" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle">API Gateway</text>
+                        </g>
+
+                        <!-- 2. Circuit Breaker Mechanism -->
+                        <g transform="translate(300, 130)">
+                            <rect width="120" height="100" rx="10" fill="rgba(255,255,255,0.02)" stroke="#FF9900" stroke-width="2" stroke-dasharray="4,4"/>
+                            <text x="60" y="25" fill="#FF9900" font-family="Inter, sans-serif" font-size="12" font-weight="600" text-anchor="middle">Circuit Breaker</text>
+                            
+                            <!-- The Switch Base -->
+                            <circle cx="40" cy="65" r="5" fill="#FFF"/>
+                            <circle cx="80" cy="65" r="5" fill="#FFF"/>
+                            
+                            <!-- The Switch Arm (Animated via CSS rotation) -->
+                            <line class="cb-switch" x1="40" y1="65" x2="80" y2="65" stroke="#10b981" stroke-width="4" stroke-linecap="round" />
+                        </g>
+
+                        <!-- 3. Primary DB (Failing) -->
+                        <g transform="translate(580, 50)">
+                            <path d="M0,20 C0,30 140,30 140,20 L140,80 C140,90 0,90 0,80 Z" fill="url(#failGrad)" stroke="#ef4444" stroke-width="2"/>
+                            <ellipse cx="70" cy="20" rx="70" ry="10" fill="#05050A" stroke="#ef4444" stroke-width="2"/>
+                            <text x="70" y="60" fill="#ef4444" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle">Overloaded DB</text>
+                            <text class="error-ping" x="140" y="20" fill="#ef4444" font-family="Inter, sans-serif" font-size="24" font-weight="bold">!</text>
+                        </g>
+
+                        <!-- 4. Fallback Cache (Redis) -->
+                        <g transform="translate(580, 220)">
+                            <rect width="140" height="80" rx="10" fill="rgba(0,168,225,0.1)" stroke="#00A8E1" stroke-width="2"/>
+                            <text x="70" y="45" fill="#00A8E1" font-family="Inter, sans-serif" font-size="14" font-weight="600" text-anchor="middle">Fallback Cache</text>
+                        </g>
+
+                        <!-- Paths -->
+                        <!-- Incoming to CB -->
+                        <path d="M 190 180 L 300 180" fill="none" stroke="#10b981" stroke-width="3" stroke-dasharray="8 6">
+                            <animate attributeName="stroke-dashoffset" from="28" to="0" dur="1s" repeatCount="indefinite" />
+                        </path>
+
+                        <!-- CB to DB (Primary Path - Stops when CB opens) -->
+                        <path class="primary-traffic" d="M 420 180 L 490 180 L 490 100 L 580 100" fill="none" stroke="#10b981" stroke-width="3" stroke-dasharray="8 6">
+                            <animate attributeName="stroke-dashoffset" from="28" to="0" dur="1s" repeatCount="indefinite" />
+                        </path>
+
+                        <!-- CB to Fallback (Secondary Path - Starts when CB opens) -->
+                        <path class="fallback-traffic" d="M 420 180 L 490 180 L 490 260 L 580 260" fill="none" stroke="#00A8E1" stroke-width="3" stroke-dasharray="8 6">
+                            <animate attributeName="stroke-dashoffset" from="28" to="0" dur="1s" repeatCount="indefinite" />
+                        </path>
+                        
+                        <text class="primary-traffic" x="535" y="90" fill="#ef4444" font-family="Inter, sans-serif" font-size="11" font-weight="600">Timeout / 503</text>
+                        <text class="fallback-traffic" x="430" y="275" fill="#00A8E1" font-family="Inter, sans-serif" font-size="11" font-weight="600">Route to Fallback</text>
+                        
+                        <!-- Retry Arrow -->
+                        <g class="retry-anim">
+                            <path d="M 410 120 Q 360 70 310 120" fill="none" stroke="#FF9900" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrowhead)"/>
+                            <text x="360" y="70" fill="#FF9900" font-family="Inter, sans-serif" font-size="10" font-weight="600" text-anchor="middle">Exp. Backoff Retry</text>
+                        </g>
+
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Bottom: Metrics & Tech -->
+            <div class="bento-grid" style="grid-template-columns: repeat(2, 1fr);">
+                
+                <div class="bento-item bento-metric">
+                    <span class="metric-value gradient-text" style="background: linear-gradient(135deg, #10b981, #34d399); -webkit-background-clip: text;">100%</span>
+                    <span class="metric-label">Uptime Maintained<br><span style="color: #10b981; font-weight: 600;">During DB Outage</span></span>
+                </div>
+
+                <div class="bento-item bento-metric">
+                    <span class="metric-value gradient-text" style="background: linear-gradient(135deg, #FF9900, #ff5e62); -webkit-background-clip: text;">&lt;5ms</span>
+                    <span class="metric-label">Fallback Latency<br><span style="color: #FF9900; font-weight: 600;">Instant Shedding</span></span>
+                </div>
+
+                <div class="bento-item bento-tech">
+                    <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 1rem; line-height: 1.5;">
+                        <strong>Circuit Breaker & Load Shedding:</strong> Prevented cascading failures under extreme load using a distributed Circuit Breaker with a 3-state machine. In the <strong>Closed</strong> state, traffic flows normally to the database. If failure thresholds are exceeded, it transitions to <strong>Open</strong>, instantly shedding load to a Fallback Cache. After a cooldown, it enters the <strong>Half-Open</strong> state, allowing limited probe requests with Exponential Backoff Retries to check if the database has self-healed.
+                    </p>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <span class="tech-pill">Circuit Breaker</span>
+                        <span class="tech-pill">3-State Machine</span>
+                        <span class="tech-pill">Load Shedding</span>
+                        <span class="tech-pill">Fallback Cache</span>
+                        <span class="tech-pill">Exp. Backoff</span>
+                    </div>
+                </div>
+
+            </div>
+        </article>
+        <!-- Point 4: Data Consistency (Transactional Outbox & CDC) -->
+        <article class="infographic-section" id="point-4" style="margin-top: 6rem;">
             
             <!-- Section Header -->
             <div class="section-header" style="text-align: center; margin-bottom: 1rem;">
@@ -380,8 +502,8 @@
                 </div>
 
             </div>
-        <!-- Point 4: Zero-Downtime Migration (PostgreSQL to NoSQL) -->
-        <article class="infographic-section" id="point-4" style="margin-top: 6rem;">
+        <!-- Point 5: Zero-Downtime Migration (PostgreSQL to NoSQL) -->
+        <article class="infographic-section" id="point-5" style="margin-top: 6rem; margin-bottom: 6rem;">
             
             <!-- Section Header -->
             <div class="section-header" style="text-align: center; margin-bottom: 1rem;">
@@ -522,9 +644,9 @@
                         <span class="tech-pill">NoSQL</span>
                     </div>
                 </div>
-
             </div>
         </article>
+
 
     </main>
 

@@ -25,8 +25,8 @@ export function initScrollObserver() {
         });
     }, observerOptions);
 
-    // Observe all glass cards
-    document.querySelectorAll('.glass-card').forEach(el => observer.observe(el));
+    // Observe all glass cards and bento grid items
+    document.querySelectorAll('.glass-card, .bento-item').forEach(el => observer.observe(el));
     
     // Observe all timeline items
     document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
