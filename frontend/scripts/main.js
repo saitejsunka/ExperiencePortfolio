@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Handle Sticky Navbar visibility using IntersectionObserver
     const stickyNav = document.getElementById('sticky-nav');
     const heroTitle = document.querySelector('.hero h1');
+    const tocName = document.getElementById('toc-name');
     
     if (stickyNav && heroTitle) {
         const navObserver = new IntersectionObserver((entries) => {
@@ -42,8 +43,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 // If the hero title is NOT intersecting and its bounding box is above the viewport (top < 0)
                 if (!entry.isIntersecting && entry.boundingClientRect.bottom < 0) {
                     stickyNav.classList.add('scrolled');
+                    if (tocName) tocName.classList.add('visible');
                 } else {
                     stickyNav.classList.remove('scrolled');
+                    if (tocName) tocName.classList.remove('visible');
                 }
             });
         }, {

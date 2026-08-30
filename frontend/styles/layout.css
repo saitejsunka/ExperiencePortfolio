@@ -141,6 +141,44 @@ html {
     z-index: 50;
 }
 
+.toc-name {
+    position: absolute;
+    top: -6.5rem;
+    left: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.toc-name.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toc-name h2 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    background: linear-gradient(-45deg, #94a3b8 25%, #ffffff 50%, #94a3b8 75%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: text-shimmer 4s linear infinite;
+    margin: 0;
+}
+
+.toc-name p {
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: linear-gradient(-45deg, #94a3b8 25%, #ffffff 50%, #94a3b8 75%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: text-shimmer 4s linear infinite;
+    margin: 0.2rem 0 0 0;
+}
+
 .toc-heading {
     font-size: 0.9rem;
     font-weight: 700;

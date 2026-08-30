@@ -25,16 +25,93 @@
     <link rel="stylesheet" href="styles/base.css?v=9">
     <link rel="stylesheet" href="styles/layout.css?v=9">
     <link rel="stylesheet" href="styles/components/infographic.css?v=9">
+    <link rel="stylesheet" href="styles/components/ticker.css?v=1">
+
+    <!-- Icon Fonts for Skills Section -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
     <!-- Sticky Navigation Bar (Appears on scroll) -->
     <nav id="sticky-nav" class="sticky-nav">
-        <div class="nav-title">Sai Tej Sunkara - Backend Developer</div>
+        <div class="nav-title" style="width: auto; white-space: nowrap; margin-right: 2rem;">Skills</div>
+        
+        <!-- Infinite Skills Ticker (Navbar version) -->
+        <div class="ticker-wrapper" style="flex: 1;">
+            <div class="ticker-track">
+                <div class="ticker-item"><i class="fas fa-cubes"></i><span>Microservices</span></div>
+                <div class="ticker-item"><i class="fas fa-exchange-alt"></i><span>CQRS</span></div>
+                <div class="ticker-item"><i class="fas fa-envelope-open-text"></i><span>Message Queues</span></div>
+                <div class="ticker-item"><i class="fas fa-route"></i><span>Saga Pattern</span></div>
+                <div class="ticker-item"><i class="fas fa-history"></i><span>Event Sourcing</span></div>
+                <div class="ticker-item"><i class="fas fa-copy"></i><span>Cross-Cluster Replication</span></div>
+                <div class="ticker-item"><i class="fas fa-plug"></i><span>RPC APIs</span></div>
+                <div class="ticker-item"><i class="fas fa-compress-arrows-alt"></i><span>Eventual Consistency</span></div>
+                <div class="ticker-item"><i class="fas fa-link"></i><span>Simulated Strong Consistency</span></div>
+                <div class="ticker-item"><i class="fas fa-cloud"></i><span>IaaS</span></div>
+                <div class="ticker-item"><i class="fas fa-mirror"></i><span>Server Reflection</span></div>
+                <div class="ticker-item"><i class="devicon-googlecloud-plain"></i><span>GCP</span></div>
+                <div class="ticker-item"><i class="devicon-amazonwebservices-plain-wordmark"></i><span>AWS</span></div>
+                <div class="ticker-item"><i class="fas fa-code-branch"></i><span>Pipelines</span></div>
+                <div class="ticker-item"><i class="devicon-docker-plain"></i><span>Docker</span></div>
+                <div class="ticker-item"><i class="devicon-kubernetes-plain"></i><span>Kubernetes</span></div>
+                <div class="ticker-item"><i class="devicon-terraform-plain"></i><span>Terraform</span></div>
+                <div class="ticker-item"><i class="devicon-git-plain"></i><span>Git</span></div>
+                <div class="ticker-item"><i class="fas fa-rocket"></i><span>Google Antigravity</span></div>
+                <div class="ticker-item"><i class="fas fa-robot"></i><span>AI Agents</span></div>
+                <div class="ticker-item"><i class="fas fa-network-wired"></i><span>MCP</span></div>
+                <div class="ticker-item"><i class="devicon-java-plain"></i><span>Java</span></div>
+                <div class="ticker-item"><i class="devicon-cplusplus-plain"></i><span>C++</span></div>
+                <div class="ticker-item"><i class="devicon-go-original-wordmark"></i><span>Golang</span></div>
+                <div class="ticker-item"><i class="fas fa-database"></i><span>SQL</span></div>
+                <div class="ticker-item"><i class="devicon-python-plain"></i><span>Python</span></div>
+                <div class="ticker-item"><i class="devicon-redis-plain"></i><span>Redis Lua</span></div>
+                <div class="ticker-item"><i class="devicon-postgresql-plain"></i><span>PostgreSQL</span></div>
+                <div class="ticker-item"><i class="fas fa-server"></i><span>NoSQL</span></div>
+                <div class="ticker-item"><i class="devicon-redis-plain"></i><span>Redis</span></div>
+                <div class="ticker-item"><i class="fas fa-project-diagram"></i><span>Database Modeling</span></div>
+                <div class="ticker-item"><i class="fas fa-cubes"></i><span>Microservices</span></div>
+                <div class="ticker-item"><i class="fas fa-exchange-alt"></i><span>CQRS</span></div>
+                <div class="ticker-item"><i class="fas fa-envelope-open-text"></i><span>Message Queues</span></div>
+                <div class="ticker-item"><i class="fas fa-route"></i><span>Saga Pattern</span></div>
+                <div class="ticker-item"><i class="fas fa-history"></i><span>Event Sourcing</span></div>
+                <div class="ticker-item"><i class="fas fa-copy"></i><span>Cross-Cluster Replication</span></div>
+                <div class="ticker-item"><i class="fas fa-plug"></i><span>RPC APIs</span></div>
+                <div class="ticker-item"><i class="fas fa-compress-arrows-alt"></i><span>Eventual Consistency</span></div>
+                <div class="ticker-item"><i class="fas fa-link"></i><span>Simulated Strong Consistency</span></div>
+                <div class="ticker-item"><i class="fas fa-cloud"></i><span>IaaS</span></div>
+                <div class="ticker-item"><i class="fas fa-mirror"></i><span>Server Reflection</span></div>
+                <div class="ticker-item"><i class="devicon-googlecloud-plain"></i><span>GCP</span></div>
+                <div class="ticker-item"><i class="devicon-amazonwebservices-plain-wordmark"></i><span>AWS</span></div>
+                <div class="ticker-item"><i class="fas fa-code-branch"></i><span>Pipelines</span></div>
+                <div class="ticker-item"><i class="devicon-docker-plain"></i><span>Docker</span></div>
+                <div class="ticker-item"><i class="devicon-kubernetes-plain"></i><span>Kubernetes</span></div>
+                <div class="ticker-item"><i class="devicon-terraform-plain"></i><span>Terraform</span></div>
+                <div class="ticker-item"><i class="devicon-git-plain"></i><span>Git</span></div>
+                <div class="ticker-item"><i class="fas fa-rocket"></i><span>Google Antigravity</span></div>
+                <div class="ticker-item"><i class="fas fa-robot"></i><span>AI Agents</span></div>
+                <div class="ticker-item"><i class="fas fa-network-wired"></i><span>MCP</span></div>
+                <div class="ticker-item"><i class="devicon-java-plain"></i><span>Java</span></div>
+                <div class="ticker-item"><i class="devicon-cplusplus-plain"></i><span>C++</span></div>
+                <div class="ticker-item"><i class="devicon-go-original-wordmark"></i><span>Golang</span></div>
+                <div class="ticker-item"><i class="fas fa-database"></i><span>SQL</span></div>
+                <div class="ticker-item"><i class="devicon-python-plain"></i><span>Python</span></div>
+                <div class="ticker-item"><i class="devicon-redis-plain"></i><span>Redis Lua</span></div>
+                <div class="ticker-item"><i class="devicon-postgresql-plain"></i><span>PostgreSQL</span></div>
+                <div class="ticker-item"><i class="fas fa-server"></i><span>NoSQL</span></div>
+                <div class="ticker-item"><i class="devicon-redis-plain"></i><span>Redis</span></div>
+                <div class="ticker-item"><i class="fas fa-project-diagram"></i><span>Database Modeling</span></div>
+            </div>
+        </div>
     </nav>
 
     <!-- Table of Contents (Fixed Left) -->
     <aside id="toc-timeline" class="toc-timeline">
-        <h3 class="toc-heading">My Amazon Experience</h3>
+        <div id="toc-name" class="toc-name">
+            <h2>Sai Tej Sunkara</h2>
+            <p>Backend Developer</p>
+        </div>
+        <h3 class="toc-heading" style="margin-top: 1.5rem;">My Amazon Experience</h3>
         <a href="#cache-stampede" class="toc-link" style="--point-color: #38bdf8; --point-gradient: linear-gradient(135deg, #38bdf8, #818cf8);">
             <span class="toc-dot"></span>
             <span class="toc-text">Eliminated Cache Stampede</span>
@@ -59,7 +136,7 @@
         <!-- TOC Action Buttons -->
         <div class="toc-actions">
             <button class="toc-btn primary" onclick="window.open('https://docs.google.com/document/d/1TJUXCSh4vWlTFl5Py5vRlGtkN7U7PvW35WcjzFXX8bw/edit?usp=sharing', '_blank')">View My Resume</button>
-            <button class="toc-btn outline" onclick="window.location.href='mailto:saitejsunka@gmail.com';">Send email to Sai</button>
+            <button class="toc-btn outline" onclick="window.location.href='mailto:saitejsunka@gmail.com';">Send email</button>
             <span class="toc-email"><strong>Email: </strong>saitejsunka@gmail.com</span>
             <span class="toc-email"><strong>Phone: </strong>+1 206-440-6594</span>
         </div>
@@ -68,7 +145,7 @@
     <main class="container">
         <!-- Hero Section -->
         <section class="hero">
-            <h1>Sai Tej Sunkara - Portfolio</h1>
+            <h1>Sai Tej Sunkara</h1>
             <p>Architecting resilient, ultra-low latency distributed systems that thrive under planetary-scale traffic spikes at Amazon.</p>
             <div class="company-badge amazon" style="display: inline-block; margin-top: 1rem;">SDE at ECommerce Foundation Org</div>
             <div class="company-badge infosys" style="display: inline-block; margin-top: 1rem;">Former Senior Systems Engineer at Infosys</div>
@@ -76,7 +153,7 @@
             <!-- Mobile Contact Actions (Hidden on Desktop) -->
             <div class="mobile-contact-actions">
                 <button class="toc-btn primary" onclick="window.open('https://docs.google.com/document/d/1TJUXCSh4vWlTFl5Py5vRlGtkN7U7PvW35WcjzFXX8bw/edit?usp=sharing', '_blank')">View My Resume</button>
-                <button class="toc-btn outline" onclick="window.location.href='mailto:saitejsunka@gmail.com';">Send email to Sai</button>
+                <button class="toc-btn outline" onclick="window.location.href='mailto:saitejsunka@gmail.com';">Send email</button>
                 <div class="mobile-contact-info">
                     <span class="toc-email"><strong>Email: </strong>saitejsunka@gmail.com</span>
                     <span class="toc-email"><strong>Phone: </strong>+1 206-440-6594</span>
