@@ -14,6 +14,12 @@ resource "google_compute_backend_bucket" "default_frontend" {
   bucket_name = google_storage_bucket.frontend_assets.name
   enable_cdn  = true
 
+  cdn_policy {
+    cache_mode  = "CACHE_ALL_STATIC"
+    default_ttl = 86400 # 1 Day in edge nodes
+    client_ttl  = 3600  # 1 Hour in user browsers
+    max_ttl     = 86400 # 1 Day maximum
+  }
 }
 
 # 3. Create the URL Map (Routes traffic to the backend bucket)
@@ -67,6 +73,7 @@ resource "google_compute_target_https_proxy" "frontend_https" {
   name             = "expo-frontend-https-proxy"
   url_map          = google_compute_url_map.default_frontend.id
   ssl_certificates = [google_compute_managed_ssl_certificate.frontend_cert.id]
+  quic_override    = "ENABLE"
 }
 
 # 8. Create the Global Forwarding Rule for HTTPS (port 443)
