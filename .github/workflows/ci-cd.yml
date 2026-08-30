@@ -184,7 +184,7 @@ jobs:
 
       - name: Sync static files to Cloud Storage Bucket
         run: |
-          gsutil -m rsync -r -z "css,html,js" frontend/ gs://experienceportfolio-frontend-assets/
+          gsutil -m cp -z "css,html,js" -r frontend/* gs://experienceportfolio-frontend-assets/
 
       - name: Invalidate Cloud CDN Cache
         run: |
