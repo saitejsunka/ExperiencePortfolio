@@ -7,7 +7,15 @@
     <!-- Prevent search engines from indexing the site -->
     <meta name="robots" content="noindex, nofollow">
     <title>Sai Tej Sunkara Portfolio</title>
-
+    
+    <!-- Inline critical CSS to prevent white flash on load -->
+    <style>
+        body {
+            background-color: #05050A;
+            color: #f8fafc;
+            margin: 0;
+        }
+    </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -276,11 +284,11 @@
 
                     <div class="bento-item bento-tech">
                         <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 1rem; line-height: 1.5;">
-                            <strong>CQRS & Event Sourcing:</strong> Re-architected the backend to separate Read and Write paths. Writes hit an async PubSub queue for an immediate client response, safely buffering spikes and eventually fan-out syncing to the Primary DB and Cache. Reads prioritize the Cache, falling back to a Read Replica to eliminate contention.
+                            <strong>CQRS & Load Leveling:</strong> Re-architected the backend to separate Read and Write paths. Writes hit an async PubSub queue for an immediate client response, safely buffering spikes and eventually fan-out syncing to the Primary DB and Cache. Reads prioritize the Cache, falling back to a Read Replica to eliminate contention.
                         </p>
                         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                             <span class="tech-pill">CQRS Pattern</span>
-                            <span class="tech-pill">Event Sourcing</span>
+                            <span class="tech-pill">Load Leveling</span>
                             <span class="tech-pill">PubSub Queue</span>
                             <span class="tech-pill">Read Replica</span>
                         </div>
