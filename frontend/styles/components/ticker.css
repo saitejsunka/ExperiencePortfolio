@@ -15,6 +15,7 @@
     width: calc(180px * 31 * 2); /* Approximate width based on items */
     animation: scroll-ticker 120s linear infinite; /* Slower for navbar */
     gap: 3rem;
+    will-change: transform; /* Force hardware acceleration */
 }
 
 /* Pause animation on hover so they can read/look at a specific logo */
@@ -54,11 +55,11 @@
 /* Keyframes for the infinite horizontal scroll */
 @keyframes scroll-ticker {
     0% {
-        transform: translateX(0);
+        transform: translate3d(0, 0, 0);
     }
     100% {
         /* Shift by exactly half the track (the length of the first 31 items) */
-        transform: translateX(calc(-50% - 1.5rem));
+        transform: translate3d(calc(-50% - 1.5rem), 0, 0);
     }
 }
 
