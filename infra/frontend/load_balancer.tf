@@ -14,10 +14,6 @@ resource "google_compute_backend_bucket" "default_frontend" {
   bucket_name = google_storage_bucket.frontend_assets.name
   enable_cdn  = true
 
-  log_config {
-    enable      = true
-    sample_rate = 1.0
-  }
 }
 
 # 3. Create the URL Map (Routes traffic to the backend bucket)
