@@ -20,6 +20,8 @@ resource "google_compute_backend_bucket" "default_frontend" {
     client_ttl  = 3600  # 1 Hour in user browsers
     max_ttl     = 86400 # 1 Day maximum
   }
+  
+  compression_mode = "AUTOMATIC"
 }
 
 # 3. Create the URL Map (Routes traffic to the backend bucket)
